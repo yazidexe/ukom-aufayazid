@@ -4,7 +4,7 @@ include __DIR__ . '/config/database.php';
 if(isset($_POST['save'])){
 
     $name  = $_POST['name'];
-    $category = $_POST['category'];
+    $category = strtolower(str_replace('-', '', $_POST['category']));
     $stock = $_POST['stock'];
     $price = $_POST['price'];
     $description = $_POST['description']; 

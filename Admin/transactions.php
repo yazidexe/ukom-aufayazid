@@ -1,19 +1,25 @@
 <?php
 include '../Admin/config/database.php';
 
-$query = "SELECT 
-            t.id,
-            p.name AS product_name,
-            s.customer_name,
-            p.category,
-            t.quantity,
-            t.subtotal,
-            t.proof_of_payment,
-            t.created_at
-          FROM transactions t
-          JOIN products p ON t.product_id = p.id
-          JOIN sales s ON t.sale_id = s.id
-          ORDER BY t.id DESC";
+$query = "
+    SELECT 
+        order_items.id,
+        products.name AS product_name,
+        users.name AS customer_name,
+        users.email AS customer_email,
+        products.category,
+        order_items.qty AS quantity,
+        (order_items.qty * order_items.price) AS subtotal,
+        orders.proof,
+        orders.address,
+        orders.payment_method,
+        orders.created_at
+    FROM order_items
+    JOIN products ON order_items.product_id = products.id
+    JOIN orders ON order_items.order_id = orders.id
+    JOIN users ON orders.user_id = users.id
+    ORDER BY order_items.id DESC
+";
 
 $result = mysqli_query($conn, $query);
 
@@ -98,46 +104,115 @@ if(!$result){
         </ul>
     </div>
 
-    <?php while($row = mysqli_fetch_assoc($result)) { ?>
-    <tr>
-        <td><?= $row['product_name']; ?></td>
-        <td><?= $row['customer_name']; ?></td>
-        <td><?= $row['category']; ?></td>
-        <td><?= $row['quantity']; ?></td>
-        <td>Rp<?= number_format($row['total_price'], 0, ',', '.'); ?></td>
-        <td>
-            <button onclick="openProofModal('<?= $row['proof_of_payment']; ?>')">
-                View
-            </button>
-        </td>
-        <td>
-            <a href="receipt.php?id=<?= $row['id']; ?>">
-                <button>Receipt</button>
-            </a>
-        </td>
-    </tr>
-    <?php } ?>
+    <!-- TABLE -->
+    <div class="px-8 mt-6">
 
-    <!-- MODAL POP -->
-    <div id="proofModal" class="modal">
-        <span onclick="closeModal()">X</span>
-        <img id="proofImage" style="width:100%">
+    <div class="overflow-x-auto border border-[#0B483A] rounded-lg">
+    <table class="w-full text-sm">
+
+        <thead class="bg-[#0B483A] text-white">
+            <tr>
+                <th class="p-3">Product</th>
+                <th class="p-3">Customer</th>
+                <th class="p-3">Category</th>
+                <th class="p-3">Qty</th>
+                <th class="p-3">Price</th>
+                <th class="p-3">POP</th>
+                <th class="p-3">Address</th>
+                <th class="p-3">Payment</th>
+                <th class="p-3">Receipt</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        <?php while($row = mysqli_fetch_assoc($result)) { ?>
+            <tr class="border-t text-start">
+
+                <td class="p-3"><?= $row['product_name']; ?></td>
+
+                <td class="p-3">
+                    <div class="text-sm font-medium"><?= $row['customer_name']; ?></div>
+                    <div class="text-xs text-gray-400"><?= $row['customer_email']; ?></div>
+                </td>
+
+                <td class="p-3 text-center"><?= $row['category']; ?></td>
+
+                <td class="p-3 text-center"><?= $row['quantity']; ?></td>
+
+                <td class="p-3 font-semibold text-[#0B483A]">
+                    Rp<?= number_format($row['subtotal'], 0, ',', '.'); ?>
+                </td>
+
+                <td class="p-3 text-center">
+                    <?php if($row['proof']): ?>
+                        <button onclick="openProofModal('<?= $row['proof']; ?>')"
+                            class="bg-blue-500 text-white px-3 py-1 rounded">
+                            View
+                        </button>
+                    <?php else: ?>
+                        <span class="text-gray-400">-</span>
+                    <?php endif; ?>
+                </td>
+
+                <td class="p-3"><?= $row['address']; ?></td>
+
+                    <td class="p-3 text-center">
+                        <?php if($row['payment_method'] == 'transfer'): ?>
+                            <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs">
+                                Transfer
+                            </span>
+                        <?php else: ?>
+                            <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-xs">
+                                COD
+                            </span>
+                        <?php endif; ?>
+                    </td>   
+
+                <td class="p-3">
+                    <a href="receipt.php?id=<?= $row['id']; ?>">
+                        <button class="bg-[#199276] text-white px-3 py-1 rounded">
+                            Receipt
+                        </button>
+                    </a>
+                </td>
+
+            </tr>
+        <?php } ?>
+
+        </tbody>
+    </table>
+    </div>
+
+    </div>
+
+    <!-- MODAL -->
+    <div id="proofModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        
+        <div class="bg-white p-4 rounded-xl relative max-w-lg w-full">
+            
+            <button onclick="closeModal()" 
+                class="absolute top-2 right-3 text-gray-500 text-xl">
+                ✕
+            </button>
+
+            <img id="proofImage" class="w-full rounded-lg">
+
+        </div>
     </div>
 
     <script>
+    lucide.createIcons();
+    
     function openProofModal(imageName) {
-        document.getElementById("proofImage").src = "uploads/" + imageName;
-        document.getElementById("proofModal").style.display = "block";
+    document.getElementById("proofImage").src = "../uploads/proofs/" + imageName;
+    document.getElementById("proofModal").classList.remove("hidden");
+    document.getElementById("proofModal").classList.add("flex");
     }
 
     function closeModal() {
-        document.getElementById("proofModal").style.display = "none";
+        document.getElementById("proofModal").classList.add("hidden");
     }
-    </script>
-
-
-    <script>
-        lucide.createIcons();
     </script>
 
 </body>

@@ -196,7 +196,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
 
                         <option value="Shirt">Shirt</option>
                         <option value="T-Shirt">T-Shirt</option>
-                        <option value="Pant">Pant</option>
+                        <option value="Pants">Pants</option>
                         <option value="Shoes">Shoes</option>
 
                     </select>

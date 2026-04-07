@@ -2,7 +2,7 @@
 include "Admin/config/database.php";
 
 // Ambil kategori dari URL
-$category = isset($_GET['kategori']) ? $_GET['kategori'] : '';
+$category = $_GET['category'] ?? $_GET['kategori'] ?? '';
 
 // Kalau kosong redirect (biar aman)
 if ($category == '') {
@@ -11,7 +11,9 @@ if ($category == '') {
 }
 
 // Query berdasarkan kategori
-$stmt = mysqli_prepare($conn, "SELECT * FROM products WHERE category = ? ORDER BY id DESC");
+$stmt = mysqli_prepare($conn, 
+    "SELECT * FROM products WHERE LOWER(category) = LOWER(?) ORDER BY id DESC"
+);
 mysqli_stmt_bind_param($stmt, "s", $category);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -39,6 +41,7 @@ body { font-family: 'Poppins', sans-serif; }
 
 <?php include "includes/navbar.php"; ?>
 
+<!-- CARD PRODUCT -->
 <section class="px-10 py-12 max-w-[1250px] mx-auto">
     
     <h1 class="text-3xl font-semibold text-[#0B5C4A] mt-20 mb-10 capitalize">
@@ -79,23 +82,28 @@ body { font-family: 'Poppins', sans-serif; }
                         Rp <?= number_format($product['price'],0,',','.'); ?>
                     </p>
 
-                    <button class="w-full py-2 bg-[#0B5C4A] text-white rounded-lg hover:opacity-90 transition">
-                        Add to Cart
-                    </button>
+                    <form action="add_to_cart.php" method="POST">
+                        <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
+                        
+                        <button type="submit"
+                            class="w-full py-2 bg-[#0B5C4A] text-white rounded-lg hover:opacity-90 transition">
+                            Add to Cart
+                        </button>
+                    </form>
                 </div>
 
             </div>
 
         <?php endwhile; ?>
         <?php else: ?>
-            <p class="text-gray-500">Belum ada produk di kategori ini.</p>
+            <p class="text-gray-500">There are no products in this category yet.</p>
         <?php endif; ?>
 
     </div>
 
 </section>
 
-<!-- MODAL -->
+<!-- MODAL PRODUCT -->
 <section>
     <div id="productModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
@@ -129,6 +137,7 @@ body { font-family: 'Poppins', sans-serif; }
 <script>
 lucide.createIcons();
 
+// SCRIPT MODAL PRODUCT
 function openModal(element) {
 
     const name = element.dataset.name;

@@ -5,31 +5,34 @@ $stockData = mysqli_query($conn, "SELECT id, name, category, stock FROM products
 
 $salesData = mysqli_query($conn, "
     SELECT 
-        sales.id,
-        sales.customer_name,
-        sales.total_price,
-        sales.created_at,
-        IFNULL(SUM(transactions.quantity),0) AS total_quantity
-    FROM sales
-    LEFT JOIN transactions 
-        ON sales.id = transactions.sale_id
-    GROUP BY sales.id
-    ORDER BY sales.id DESC
+        orders.id,
+        users.name AS customer_name,
+        orders.total AS total_price,
+        orders.created_at,
+        SUM(order_items.qty) AS total_quantity
+    FROM orders
+    JOIN users ON orders.user_id = users.id
+    JOIN order_items ON orders.id = order_items.order_id
+    GROUP BY orders.id
+    ORDER BY orders.id DESC
 ");
 
 $transactionData = mysqli_query($conn, "
     SELECT 
-        transactions.id,
-        sales.customer_name,
+        order_items.id,
+        orders.id AS order_id,
+        users.name AS customer_name,
         products.name AS product_name,
         products.category,
-        sales.created_at,
-        transactions.quantity,
-        transactions.subtotal
-    FROM transactions
-    JOIN sales ON transactions.sale_id = sales.id
-    JOIN products ON transactions.product_id = products.id
-    ORDER BY transactions.id DESC
+        orders.created_at,
+        order_items.qty AS quantity,
+        (order_items.qty * order_items.price) AS subtotal,
+        orders.status
+    FROM order_items
+    JOIN orders ON order_items.order_id = orders.id
+    JOIN users ON orders.user_id = users.id
+    JOIN products ON order_items.product_id = products.id
+    ORDER BY order_items.id DESC
 ");
 
 ?>
@@ -114,7 +117,7 @@ $transactionData = mysqli_query($conn, "
         <!-- TAB NAVIGATION -->
         <div class="px-8 mt-6">
 
-            <div class="flex gap-2">
+            <div class="flex">
 
                 <button onclick="showTab('stock')" id="tab-stock"
                     class="tab-btn bg-[#0B483A] text-white px-5 py-2 rounded-t-lg flex items-center gap-2">
@@ -139,7 +142,7 @@ $transactionData = mysqli_query($conn, "
         </div>
 
         <!-- STOCK TABLE -->
-        <div id="stock" class="tab-content px-8 mt-2">
+        <div id="stock" class="tab-content px-8">
 
             <div class="overflow-x-auto border border-[#0B483A] rounded-b-lg">
                 <table class="w-full text-sm">
@@ -182,7 +185,7 @@ $transactionData = mysqli_query($conn, "
 
         <!-- SALES TABLE -->
         <div id="sales" class="tab-content px-8 hidden">
-            <div class="overflow-x-auto border border-[#0B483A] rounded-b-lg mt-2">
+            <div class="overflow-x-auto border border-[#0B483A] rounded-b-lg">
                 <table class="w-full text-sm">
 
                     <thead class="bg-[#0B483A] text-white">
@@ -235,7 +238,7 @@ $transactionData = mysqli_query($conn, "
 
         <!-- TRANSACTION TABLE -->
         <div id="transaction" class="tab-content px-8 hidden">
-            <div class="overflow-x-auto border border-[#0B483A] rounded-b-lg mt-2">
+            <div class="overflow-x-auto border border-[#0B483A] rounded-b-lg">
                 <table class="w-full text-sm">
 
                     <thead class="bg-[#0B483A] text-white">
@@ -247,6 +250,7 @@ $transactionData = mysqli_query($conn, "
                             <th class="p-3">Date</th>
                             <th class="p-3">Quantity</th>
                             <th class="p-3">Price</th>
+                            <th class="p-3">Status</th>
                             <th class="p-3">Actions</th>
                         </tr>
                     </thead>
@@ -257,11 +261,11 @@ $transactionData = mysqli_query($conn, "
 
                             <td class="p-3"><?= $row['id'] ?></td>
 
-                            <td class="p-3">
+                            <td class="p-3 text-start">
                                 <?= $row['customer_name'] ?>
                             </td>
 
-                            <td class="p-3">
+                            <td class="p-3 text-start">
                                 <?= $row['product_name'] ?>
                             </td>
 
@@ -282,12 +286,40 @@ $transactionData = mysqli_query($conn, "
                             </td>
 
                             <td class="p-3">
-                                <a href="receipt.php?id=<?= $row['id'] ?>"
-                                    class="bg-[#199276] text-white px-3 py-1 rounded">
-                                    <i data-lucide="file-text" class="w-4 h-4"></i>
-                                </a>
+                                <?php if($row['status'] == 'accepted'): ?>
+                                    <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-xs">
+                                        Accepted
+                                    </span>
+                                <?php else: ?>
+                                    <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-xs">
+                                        Pending
+                                    </span>
+                                <?php endif; ?>
                             </td>
 
+                            <td class="p-3 flex flex-col gap-2 items-center">
+
+                                <!-- STRUK -->
+                                <a href="receipt.php?id=<?= $row['id']; ?>">
+                                    <button class="bg-[#199276] text-white px-4 py-1 rounded text-xs">
+                                        Receipt
+                                    </button>
+                                </a>
+
+                                <!-- ACCEPT -->
+                                <?php if($row['status'] == 'pending'): ?>
+                                    <a href="accept_order.php?id=<?= $row['id']; ?>">
+                                        <button class="bg-blue-500 text-white px-3 py-1 rounded text-xs">
+                                            Accept
+                                        </button>
+                                    </a>
+                                <?php else: ?>
+                                    <button class="bg-gray-300 text-gray-500 px-3 py-1 rounded text-xs cursor-not-allowed">
+                                        Accepted
+                                    </button>
+                                <?php endif; ?>
+
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>
