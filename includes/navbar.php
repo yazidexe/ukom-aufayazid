@@ -1,4 +1,15 @@
 <?php
+$avatar = $_SESSION['avatar'] ?? null;
+
+if(!$avatar && isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+    $q = mysqli_query($conn, "SELECT avatar FROM users WHERE id='$user_id'");
+    $d = mysqli_fetch_assoc($q);
+    $avatar = $d['avatar'] ?? null;
+}
+?>
+
+<?php
 if(session_status() === PHP_SESSION_NONE){
     session_start();
 }

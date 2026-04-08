@@ -10,7 +10,6 @@ if(!isset($_SESSION['user_id'])){
 $user_id = $_SESSION['user_id'];
 
 if(isset($_FILES['avatar'])){
-
     $file = $_FILES['avatar'];
 
     if($file['name']){
@@ -29,16 +28,26 @@ if(isset($_FILES['avatar'])){
             mkdir($uploadDir, 0777, true);
         }
 
-        move_uploaded_file($file['tmp_name'], $uploadDir.$fileName);
+        $avatarPath = $uploadDir . $fileName;
 
-        // 🔥 UPDATE DB
-        mysqli_query($conn, "
-            UPDATE users SET avatar='$uploadDir$fileName' 
-            WHERE id='$user_id'
-        ");
+        if(move_uploaded_file($file['tmp_name'], $avatarPath)){
 
-        // 🔥 UPDATE SESSION BIAR LANGSUNG KEPAKE DI NAVBAR
-        $_SESSION['avatar'] = $uploadDir.$fileName;
+            // 🔥 update DB
+            $update = mysqli_query($conn, "
+                UPDATE users SET avatar='$avatarPath' 
+                WHERE id='$user_id'
+            ");
+
+            if(!$update){
+                die("Gagal update DB: " . mysqli_error($conn));
+            }
+
+            // 🔥 update session
+            $_SESSION['avatar'] = $avatarPath;
+
+        } else {
+            die("Upload file gagal");
+        }
     }
 }
 
