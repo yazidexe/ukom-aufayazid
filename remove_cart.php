@@ -1,11 +1,13 @@
 <?php
 session_start();
-include "Admin/config/database.php";
 
-$user_id = $_SESSION['user_id'];
-$product_id = $_POST['product_id'];
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
 
-mysqli_query($conn, "DELETE FROM cart WHERE user_id='$user_id' AND product_id='$product_id'");
+    if(isset($_SESSION['cart'][$id])){
+        unset($_SESSION['cart'][$id]);
+    }
+}
 
 header("Location: cart.php");
 exit;

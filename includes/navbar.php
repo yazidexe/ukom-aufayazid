@@ -76,7 +76,7 @@ flex items-center justify-between px-10 py-5">
     </div>
 
     <!-- RIGHT -->
-    <div class="flex items-center gap-5">
+    <div class="flex items-center gap-5 text-white">
 
     <a href="cart.php" class="relative">
     
@@ -94,25 +94,34 @@ flex items-center justify-between px-10 py-5">
 
     </a>
 
-    <?php if(isset($_SESSION['user_id'])): ?>
+        <div class="flex items-center gap-4">
 
-        <!-- USER LOGIN -->
-        <span class="text-sm text-white">
-            Hi, <?= $_SESSION['user_name']; ?>
-        </span>
+            <?php if(isset($_SESSION['user_id'])): ?>
 
-        <a href="logout.php" class="text-white hover:text-red-400 transition">
-            <i data-lucide="log-out"></i>
-        </a>
+                <!-- USER LOGIN -->
+                <a href="profile.php" class="flex items-center gap-2">
 
-    <?php else: ?>
+                    <span class="text-sm text-white">
+                        <?= $_SESSION['user_name']; ?>
+                    </span>
 
-        <!-- BELUM LOGIN -->
-        <a href="register.php" class="text-white hover:opacity-80 transition">
-            <i data-lucide="log-in"></i>
-        </a>
+                    <img src="<?= !empty($_SESSION['avatar']) 
+                        ? '/ukom-project/'.$_SESSION['avatar'] 
+                        : 'assets/default-avatar.png'; ?>" 
+                    class="w-8 h-8 rounded-full object-cover border-2 border-white">
+                    </a>
 
-    <?php endif; ?>
+            <?php else: ?>
+
+                <!-- BELUM LOGIN -->
+                <a href="profile.php">
+                    <img src="assets/default-avatar.png"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-white hover:opacity-80 transition">
+                </a>
+
+            <?php endif; ?>
+
+        </div>
 
 </div>
 </nav>
@@ -147,4 +156,38 @@ flex items-center justify-between px-10 py-5">
             isOpen = false;
         }
     });
+</script>
+
+<script>
+const profileBtn = document.getElementById("profileBtn");
+const profileMenu = document.getElementById("profileMenu");
+const profileArrow = document.getElementById("profileArrow");
+
+let profileOpen = false;
+
+if(profileBtn){
+    profileBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+        profileOpen = !profileOpen;
+
+        if(profileOpen){
+            profileMenu.classList.remove("opacity-0","translate-y-2","scale-95","pointer-events-none");
+            profileMenu.classList.add("opacity-100","translate-y-0","scale-100");
+            profileArrow.classList.add("rotate-180");
+        } else {
+            profileMenu.classList.add("opacity-0","translate-y-2","scale-95","pointer-events-none");
+            profileMenu.classList.remove("opacity-100","translate-y-0","scale-100");
+            profileArrow.classList.remove("rotate-180");
+        }
+    });
+
+    document.addEventListener("click", function(e){
+        if(!profileMenu.contains(e.target) && !profileBtn.contains(e.target)){
+            profileMenu.classList.add("opacity-0","translate-y-2","scale-95","pointer-events-none");
+            profileMenu.classList.remove("opacity-100","translate-y-0","scale-100");
+            profileArrow.classList.remove("rotate-180");
+            profileOpen = false;
+        }
+    });
+}
 </script>

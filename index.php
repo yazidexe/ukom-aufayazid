@@ -11,6 +11,11 @@ $query = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC LIMIT 6");
 <title>Azula</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  plugins: [tailwindcssLineClamp],
+}
+</script>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -67,27 +72,31 @@ setTimeout(() => {
 <?php endif; ?>
 
 <!-- HERO PANEL -->
-<section class="flex items-center justify-between px-20 bg-[#0B5C4A]">
+<section class="flex flex-col md:flex-row items-center justify-between 
+px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
 
     <!-- LEFT TEXT -->
-    <div class="max-w-xl">
-        <h1 class="text-7xl font-semibold leading-tight">
+    <div class="max-w-xl text-center md:text-left">
+
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-semibold leading-tight">
             <span class="text-[#199276] font-medium">Imposible is</span><br>
             <span class="font-bold text-white">Nothing</span>
         </h1>
 
-        <button class="mt-8 px-28 py-3 border border-white rounded-full
-        transition-all duration-300
-        hover:bg-white hover:text-[#0B5C4A]
-        hover:scale-105 active:scale-95">
-            Explore More
-        </button>
+        <a href="category.php?kategori=Shirt"
+            class="inline-block mt-8 px-10 md:px-28 py-3 border border-white rounded-full
+            transition-all duration-300
+            hover:bg-white hover:text-[#0B5C4A]
+            hover:scale-105 active:scale-95 text-center">
+                Explore More
+        </a>
 
     </div>
 
     <!-- RIGHT IMAGE -->
-    <div>
-        <img src="assets/hero-ecm.png" class="w-[650px] h-[650px] object-contain">
+    <div class="hidden md:flex items-center justify-center">
+        <img src="assets/hero-ecm.png" 
+        class="w-full max-w-[650px] h-auto object-contain">
     </div>
 
 </section>
@@ -149,7 +158,9 @@ setTimeout(() => {
 
                 <!-- Content -->
                 <div class="p-5">
-                    <h2 class="text-lg font-semibold text-gray-800">
+                    <h2 class="text-sm md:text-lg font-semibold text-gray-800 
+                        overflow-hidden text-ellipsis 
+                        line-clamp-2">
                         <?= htmlspecialchars($product['name']); ?>
                     </h2>
 
@@ -172,14 +183,14 @@ setTimeout(() => {
                     </form>
                 </div>
 
-    </div>
+            </div>
 
-<?php endwhile; ?>
-<?php else: ?>
-    <p class="text-gray-500">Belum ada produk.</p>
-<?php endif; ?>
+        <?php endwhile; ?>
+        <?php else: ?>
+            <p class="text-gray-500">Belum ada produk.</p>
+        <?php endif; ?>
 
-</div>
+        </div>
     </div>
 
 </section>
@@ -213,7 +224,7 @@ setTimeout(() => {
 
     <div class="bg-white w-[900px] max-h-[90vh] rounded-xl shadow-xl flex overflow-hidden animate-bounceIn relative">
 
-        <!-- ❌ CLOSE -->
+        <!-- CLOSE -->
         <button onclick="closeModal()" 
             class="absolute top-4 right-4 text-gray-400 hover:text-black text-xl">
             ✕

@@ -20,10 +20,7 @@ if(isset($_SESSION['cart'][$id])){
 }
 
 // notif
-$_SESSION['success'] = "Produk berhasil ditambahkan!";
-
-// DEBUG (hapus nanti)
-file_put_contents("debug.txt", print_r($_SESSION, true));
+$_SESSION['success'] = "product has been added to cart";
 
 header("Location: index.php");
 exit;

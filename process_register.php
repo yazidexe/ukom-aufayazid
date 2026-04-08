@@ -12,6 +12,10 @@ if(mysqli_num_rows($check) > 0){
     die("Email sudah digunakan!");
 }
 
+if($_POST['password'] !== $_POST['confirm_password']){
+    die("Password tidak sama!");
+}
+
 mysqli_query($conn, "
     INSERT INTO users (name, email, password, created_at)
     VALUES ('$name','$email','$password', NOW())

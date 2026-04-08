@@ -1,17 +1,33 @@
 <?php
 session_start();
-include "Admin/config/database.php";
 
-$user_id = $_SESSION['user_id'];
-$product_id = $_POST['product_id'];
-$action = $_POST['action'];
-
-if($action == 'plus'){
-    mysqli_query($conn, "UPDATE cart SET qty = qty + 1 WHERE user_id='$user_id' AND product_id='$product_id'");
+if(!isset($_GET['id']) || !isset($_GET['action'])){
+    header("Location: cart.php");
+    exit;
 }
 
-if($action == 'minus'){
-    mysqli_query($conn, "UPDATE cart SET qty = qty - 1 WHERE user_id='$user_id' AND product_id='$product_id' AND qty > 1");
+$id = $_GET['id'];
+$action = $_GET['action'];
+
+// pastiin cart ada
+if(!isset($_SESSION['cart'][$id])){
+    header("Location: cart.php");
+    exit;
+}
+
+// 🔥 LOGIC
+if($action == "plus"){
+    $_SESSION['cart'][$id]++;
+}
+
+if($action == "minus"){
+    $_SESSION['cart'][$id]--;
+
+    // kalau qty 0 → hapus item
+    if($_SESSION['cart'][$id] <= 0){
+        unset($_SESSION['cart'][$id]);
+    }
 }
 
 header("Location: cart.php");
+exit;

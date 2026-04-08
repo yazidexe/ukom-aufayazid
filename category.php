@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "Admin/config/database.php";
 
 // Ambil kategori dari URL
@@ -26,6 +27,11 @@ $result = mysqli_stmt_get_result($stmt);
 <title><?= htmlspecialchars($category); ?> - Azula</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  plugins: [tailwindcssLineClamp],
+}
+</script>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -70,7 +76,9 @@ body { font-family: 'Poppins', sans-serif; }
 
                 <!-- Content -->
                 <div class="p-5">
-                    <h2 class="text-lg font-semibold text-gray-800">
+                    <h2 class="text-sm md:text-lg font-semibold text-gray-800 
+                    overflow-hidden text-ellipsis 
+                    line-clamp-2">
                         <?= htmlspecialchars($product['name']); ?>
                     </h2>
 
@@ -82,14 +90,26 @@ body { font-family: 'Poppins', sans-serif; }
                         Rp <?= number_format($product['price'],0,',','.'); ?>
                     </p>
 
-                    <form action="add_to_cart.php" method="POST">
-                        <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
-                        
-                        <button type="submit"
-                            class="w-full py-2 bg-[#0B5C4A] text-white rounded-lg hover:opacity-90 transition">
-                            Add to Cart
-                        </button>
-                    </form>
+                    <?php if(isset($_SESSION['user_id'])): ?>
+
+                        <form action="add_to_cart.php" method="POST">
+                            <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
+                            
+                            <button type="submit"
+                                class="w-full py-2 bg-[#0B5C4A] text-white rounded-lg hover:opacity-90 transition">
+                                Add to Cart
+                            </button>
+                        </form>
+
+                    <?php else: ?>
+
+                        <a href="login.php"
+                        class="block w-full text-center py-2 bg-gray-200 text-gray-500 rounded-lg 
+                        hover:bg-[#0B5C4A] hover:text-white transition">
+                            Login first
+                        </a>
+
+                    <?php endif; ?>
                 </div>
 
             </div>

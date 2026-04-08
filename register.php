@@ -1,37 +1,144 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Register</title>
+<title>Register - Azula</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+body { font-family: 'Poppins', sans-serif; }
+</style>
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<body class="min-h-screen flex">
 
-<form action="process_register.php" method="POST" 
-      class="bg-white p-8 rounded-xl shadow w-[350px] space-y-4">
+<!-- LEFT SIDE (IMAGE) -->
+<div class="w-1/2 bg-white hidden md:flex items-center justify-center relative">
+    
+    <img src="assets/regis.png" 
+        class="w-[80%] object-contain">
 
-    <h1 class="text-2xl font-semibold text-center">Create Account</h1>
+</div>
 
-    <input type="text" name="name" placeholder="Name" required
-        class="w-full border p-2 rounded">
+<!-- RIGHT SIDE -->
+<div class="w-full md:w-1/2 bg-[#0B5C4A] flex items-center justify-center">
 
-    <input type="email" name="email" placeholder="Email" required
-        class="w-full border p-2 rounded">
+<form action="process_register.php" method="POST" class="w-full max-w-sm px-8">
 
-    <input type="password" name="password" placeholder="Password" required
-        class="w-full border p-2 rounded">
+    <!-- TITLE -->
+    <h2 class="text-center text-5xl font-bold text-[#199276] mb-4">
+        SIGN UP
+    </h2>
 
-    <button class="w-full bg-[#0B5C4A] text-white py-2 rounded">
-        Register
+    <!-- NAME -->
+    <div class="mb-2">
+        <input
+            type="text"
+            name="name"
+            required
+            placeholder="full name"
+            class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
+                   placeholder:italic placeholder:text-[#199276]
+                   text-[#199276] placeholder:text-sm focus:outline-none"
+        >
+    </div>
+
+    <!-- EMAIL -->
+    <div class="mb-2">
+        <input
+            type="email"
+            name="email"
+            required
+            placeholder="email"
+            class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
+                   placeholder:italic placeholder:text-[#199276]
+                   text-[#199276] placeholder:text-sm focus:outline-none"
+        >
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="mb-2 relative">
+        <input
+            type="password"
+            name="password"
+            id="password"
+            required
+            placeholder="password"
+            class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
+                   placeholder:italic placeholder:text-[#199276]
+                   text-[#199276] placeholder:text-sm focus:outline-none"
+        >
+
+        <button type="button" onclick="togglePassword()"
+            class="absolute right-5 top-1/2 -translate-y-1/2 text-[#199276]">
+            <i data-lucide="eye" id="eyeIcon" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="mb-6 relative">
+        <input
+            type="password"
+            name="confirm_password"
+            id="confirmPassword"
+            required
+            placeholder="confirm password"
+            class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
+                   placeholder:italic placeholder:text-[#199276]
+                   text-[#199276] placeholder:text-sm focus:outline-none"
+        >
+    </div>
+
+    <!-- BUTTON -->
+    <button
+        type="submit"
+        class="w-full py-6 rounded-full bg-[#199276] text-[#0B483A] text-2xl font-bold
+        transition-all duration-300 ease-out
+        hover:bg-[#1fa084]
+        hover:-translate-y-1
+        hover:shadow-xl"
+    >
+        Confirm
     </button>
 
-    <p class="text-sm text-center">
-        Already have account? 
-        <a href="login.php" class="text-blue-500">Login</a>
+    <!-- LOGIN LINK -->
+    <p class="text-center text-sm font-thin text-white mt-6">
+        Already have an account?
+        <a href="login.php" class="font-bold text-[#199276] hover:underline">
+            Login
+        </a>
     </p>
 
 </form>
+
+</div>
+
+<script>
+lucide.createIcons();
+
+function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+    } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+    }
+    lucide.createIcons();
+}
+</script>
 
 </body>
 </html>
