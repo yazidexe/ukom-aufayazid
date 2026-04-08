@@ -7,7 +7,7 @@ $current = basename($_SERVER['PHP_SELF']);
     <!-- BACK (FIX DI ATAS) -->
     <a href="index.php" 
        class="absolute top-4 left-10 text-sm text-gray-600 hover:underline">
-        ← back
+        ← Kembali
     </a>
 
     <!-- MENU -->
@@ -15,7 +15,7 @@ $current = basename($_SERVER['PHP_SELF']);
 
         <a href="cart.php" 
            class="<?= $current == 'cart.php' ? 'text-[#0B5C4A] font-semibold' : 'text-gray-400'; ?>">
-            Cart
+            Keranjang
         </a>
 
         <a href="checkout.php" 
@@ -25,7 +25,7 @@ $current = basename($_SERVER['PHP_SELF']);
 
         <a href="transaction_history.php" 
            class="<?= $current == 'transaction_history.php' ? 'text-[#0B5C4A] font-semibold' : 'text-gray-400'; ?>">
-            Transaction History
+            Riwayat Transaksi
         </a>
 
     </div>

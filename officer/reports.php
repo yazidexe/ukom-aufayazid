@@ -41,7 +41,7 @@ $transactionData = mysqli_query($conn, "
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
+    <title>Dasbor Admin</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -59,56 +59,28 @@ $transactionData = mysqli_query($conn, "
 <body class="bg-gray-100 min-h-screen">
 
     <!-- NAVBAR -->
-    <div class="bg-[#0B483A] rounded-b-3xl px-8 py-6 flex items-center justify-between">
-        <h1 class="text-white text-2xl font-semibold">
-            Dashboard Admin
-        </h1>
-
-        <a href="logout.php"
-        class="bg-[#199276] text-[#0B483A] px-6 py-2 rounded-br-2xl font-medium hover:opacity-90 transition">
-            Logout
+    <div class="bg-[#0B483A] rounded-b-3xl px-8 py-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-[#199276] rounded-xl flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+            </div>
+            <div>
+                <h1 class="text-white text-lg font-bold leading-tight">Panel Petugas</h1>
+                <p class="text-[#199276] text-xs">Halo, <span class="font-semibold"><?php @session_start(); echo htmlspecialchars($_SESSION['officer_name'] ?? 'Petugas'); ?></span>!</p>
+            </div>
+        </div>
+        <a href="logout.php" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-xl font-medium transition text-sm">
+            <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
         </a>
     </div>
 
     <!-- MENU -->
     <div class="px-8 mt-4 flex justify-center">
         <ul class="flex gap-8 text-sm text-gray-400">
-            <li>
-                <a href="dashboard.php"
-                class="hover:text-[#0B483A] transition">
-                    home
-                </a>
-            </li>
-            <li>
-                <a href="users.php"
-                class="hover:text-[#0B483A] transition">
-                    user management
-                </a>
-            </li>
-            <li>
-                <a href="products.php"
-                class="hover:text-[#0B483A] transition">
-                    product management
-                </a>
-            </li>
-            <li>
-                <a href="reports.php"
-                class="text-[#0B483A] font-semibold">
-                    generate reports
-                </a>
-            </li>
-            <li>
-                <a href="transactions.php"
-                class="hover:text-[#0B483A] transition">
-                    transaction management
-                </a>
-            </li>
-            <li>
-                <a href="backup.php"
-                class="hover:text-[#0B483A] transition">
-                    data backup/restore
-                </a>
-            </li>
+            <li><a href="dashboard.php" class="hover:text-[#0B483A] transition">beranda</a></li>
+            <li><a href="products.php" class="hover:text-[#0B483A] transition">manajemen produk</a></li>
+            <li><a href="reports.php" class="text-[#0B483A] font-semibold transition">laporan</a></li>
+            <li><a href="transactions.php" class="hover:text-[#0B483A] transition">manajemen transaksi</a></li>
         </ul>
     </div>
 
@@ -122,7 +94,7 @@ $transactionData = mysqli_query($conn, "
                 <button onclick="showTab('stock')" id="tab-stock"
                     class="tab-btn bg-[#0B483A] text-white px-5 py-2 rounded-t-lg flex items-center gap-2">
                     <i data-lucide="archive" class="w-4 h-4"></i>
-                    Stock
+                    Stok
                 </button>
 
                 <button onclick="showTab('sales')" id="tab-sales"
@@ -150,8 +122,8 @@ $transactionData = mysqli_query($conn, "
                     <thead class="bg-[#0B483A] text-white">
                         <tr>
                             <th class="p-3">Id</th>
-                            <th class="p-3 text-left">Name</th>
-                            <th class="p-3">Category</th>
+                            <th class="p-3 text-left">Nama</th>
+                            <th class="p-3">Kategori</th>
                             <th class="p-3">Quantity</th>
                         </tr>
                     </thead>
@@ -191,11 +163,11 @@ $transactionData = mysqli_query($conn, "
                     <thead class="bg-[#0B483A] text-white">
                         <tr>
                             <th class="p-3">Id</th>
-                            <th class="p-3">Customer</th>
-                            <th class="p-3">Date</th>
+                            <th class="p-3">Pelanggan</th>
+                            <th class="p-3">Tanggal</th>
                             <th class="p-3">Quantity</th>
-                            <th class="p-3">Price</th>
-                            <th class="p-3">Actions</th>
+                            <th class="p-3">Harga</th>
+                            <th class="p-3">Aksi</th>
                         </tr>
                     </thead>
 
@@ -244,14 +216,14 @@ $transactionData = mysqli_query($conn, "
                     <thead class="bg-[#0B483A] text-white">
                         <tr>
                             <th class="p-3">Id</th>
-                            <th class="p-3">Customer</th>
-                            <th class="p-3">Name</th>
-                            <th class="p-3">Category</th>
-                            <th class="p-3">Date</th>
+                            <th class="p-3">Pelanggan</th>
+                            <th class="p-3">Nama</th>
+                            <th class="p-3">Kategori</th>
+                            <th class="p-3">Tanggal</th>
                             <th class="p-3">Quantity</th>
-                            <th class="p-3">Price</th>
+                            <th class="p-3">Harga</th>
                             <th class="p-3">Status</th>
-                            <th class="p-3">Actions</th>
+                            <th class="p-3">Aksi</th>
                         </tr>
                     </thead>
 

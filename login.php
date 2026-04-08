@@ -36,7 +36,7 @@ body { font-family: 'Poppins', sans-serif; }
 
     <!-- TITLE -->
     <h2 class="text-center text-5xl font-bold text-[#199276] mb-10">
-        LOGIN
+        MASUK
     </h2>
 
     <!-- EMAIL -->
@@ -59,7 +59,7 @@ body { font-family: 'Poppins', sans-serif; }
             name="password"
             id="password"
             required
-            placeholder="password"
+            placeholder="kata sandi"
             class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                    placeholder:italic placeholder:text-[#199276]
                    text-[#199276] placeholder:text-sm focus:outline-none"
@@ -80,21 +80,21 @@ body { font-family: 'Poppins', sans-serif; }
         hover:-translate-y-1
         hover:shadow-xl"
     >
-        Login
+        Masuk
     </button>
 
     <!-- REGISTER LINK -->
     <p class="text-center text-sm font-thin text-white mt-6">
-        Don't have an account?
+        Belum punya akun?
         <a href="register.php" class="text-[#199276] font-bold hover:underline">
-            Sign Up
+            Daftar
         </a>
     </p>
 
     <!-- BACK -->
     <a href="index.php"
         class="block text-center text-xs text-white/20 mt-3 hover:text-white/50 ">
-        ← Back
+        ← Kembali
     </a>
 
 </form>

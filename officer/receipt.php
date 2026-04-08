@@ -1,4 +1,5 @@
 <?php
+include "auth.php";
 include "../Admin/config/database.php";
 
 if(!isset($_GET['id'])){

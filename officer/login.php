@@ -31,8 +31,8 @@ if(isset($_SESSION['officer_id'])){
 <div class="w-1/2 bg-white relative hidden md:block">
     <div class="absolute bottom-12 left-12">
         <h1 class="text-[70px] font-bold leading-tight">
-            Login <br> Pages<br>
-            for <br><span class="text-[#0B483A]">Officer</span>
+            Halaman <br> Masuk<br>
+            untuk <br><span class="text-[#0B483A]">Petugas</span>
         </h1>
     </div>
 </div>
@@ -43,7 +43,7 @@ if(isset($_SESSION['officer_id'])){
 
         <!-- Title -->
         <h2 class="text-center text-5xl font-bold text-[#199276] mb-10">
-            LOGIN
+            MASUK
         </h2>
 
         <!-- Email -->
@@ -66,7 +66,7 @@ if(isset($_SESSION['officer_id'])){
                 name="password"
                 id="password"
                 required
-                placeholder="password"
+                placeholder="kata sandi"
                 class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                        placeholder:italic placeholder:text-[#199276]
                        text-[#199276] placeholder:text-sm focus:outline-none"
@@ -89,7 +89,7 @@ if(isset($_SESSION['officer_id'])){
                 active:translate-y-0
                 active:shadow-md"
         >
-            Login
+            Masuk
         </button>
 
     </form>

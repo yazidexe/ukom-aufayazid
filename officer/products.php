@@ -11,7 +11,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
+    <title>Dasbor Admin</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,44 +29,28 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
 <body class="bg-gray-100 min-h-screen">
 
     <!-- NAVBAR -->
-    <div class="bg-[#0B483A] rounded-b-3xl px-8 py-6 flex items-center justify-between">
-        <h1 class="text-white text-2xl font-medium">
-            Officer Panel - <span class="text-[#199276] font-bold"><?= htmlspecialchars($officerName); ?></span>
-        </h1>
-
-        <a href="logout.php"
-        class="bg-[#199276] text-[#0B483A] px-6 py-2 rounded-br-2xl font-medium hover:opacity-90 transition">
-            Logout
+    <div class="bg-[#0B483A] rounded-b-3xl px-8 py-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-[#199276] rounded-xl flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+            </div>
+            <div>
+                <h1 class="text-white text-lg font-bold leading-tight">Panel Petugas</h1>
+                <p class="text-[#199276] text-xs">Halo, <span class="font-semibold"><?= htmlspecialchars($officerName); ?></span>!</p>
+            </div>
+        </div>
+        <a href="logout.php" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-xl font-medium transition text-sm">
+            <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
         </a>
     </div>
 
     <!-- MENU -->
     <div class="px-8 mt-4 flex justify-center">
         <ul class="flex gap-8 text-sm text-gray-400">
-            <li>
-                <a href="dashboard.php"
-                class="hover:text-[#0B483A] transition">
-                    home
-                </a>
-            </li>
-            <li>
-                <a href="products.php"
-                class="text-[#0B483A] font-semibold">
-                    product management
-                </a>
-            </li>
-            <li>
-                <a href="reports.php"
-                class="hover:text-[#0B483A] transition">
-                    generate reports
-                </a>
-            </li>
-            <li>
-                <a href="transactions.php"
-                class="hover:text-[#0B483A] transition">
-                    transaction management
-                </a>
-            </li>
+            <li><a href="dashboard.php" class="hover:text-[#0B483A] transition">beranda</a></li>
+            <li><a href="products.php" class="text-[#0B483A] font-semibold transition">manajemen produk</a></li>
+            <li><a href="reports.php" class="hover:text-[#0B483A] transition">laporan</a></li>
+            <li><a href="transactions.php" class="hover:text-[#0B483A] transition">manajemen transaksi</a></li>
         </ul>
     </div>
 
@@ -88,12 +72,12 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                     <tr>
                         <th class="p-3">Id</th>
                         <th class="p-3">Picture</th>
-                        <th class="p-3 text-left">Name</th>
-                        <th class="p-3">Category</th>
-                        <th class="p-3">Stock</th>
-                        <th class="p-3">Price</th>
-                        <th class="p-3">Action</th>
-                        <th class="p-3">Date</th>
+                        <th class="p-3 text-left">Nama</th>
+                        <th class="p-3">Kategori</th>
+                        <th class="p-3">Stok</th>
+                        <th class="p-3">Harga</th>
+                        <th class="p-3">Aksi</th>
+                        <th class="p-3">Tanggal</th>
                     </tr>
                 </thead>
 
@@ -139,7 +123,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                                         '<?= $row['name'] ?>'
                                     )"
                                     class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1">
-                                    <i data-lucide="trash" class="w-4 h-4"></i> Delete
+                                    <i data-lucide="trash" class="w-4 h-4"></i> Hapus
                                 </button>
 
                             </div>
@@ -161,7 +145,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                 <div class="bg-[#0B483A] rounded-b-3xl py-6 px-6 flex items-center justify-center">
                     
                     <h2 class="text-white text-xl font-semibold">
-                        Add Product
+                        Tambah Produk
                     </h2>
 
                    
@@ -273,7 +257,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                             class="w-1/2 border border-[#0B483A] py-4 rounded-lg
                                 text-[#0B483A] font-semibold
                                 hover:bg-gray-300 hover:text-[#0B483A] transition">
-                            Cancel
+                            Batal
                         </button>
 
                         <!-- Add -->
@@ -315,13 +299,13 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                     </div>
 
                     <div>
-                        <label class="text-sm text-gray-600">Stock</label>
+                        <label class="text-sm text-gray-600">Stok</label>
                         <input type="number" name="stock" id="edit_stock" required
                             class="w-full border rounded-md px-4 py-2">
                     </div>
 
                     <div>
-                        <label class="text-sm text-gray-600">Price</label>
+                        <label class="text-sm text-gray-600">Harga</label>
                         <input type="number" name="price" id="edit_price" required
                             class="w-full border rounded-md px-4 py-2">
                     </div>
@@ -335,7 +319,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                     <div class="flex justify-end gap-2 pt-4">
                         <button type="button" onclick="closeEditModal()"
                                 class="px-5 py-2 rounded-md border">
-                            Cancel
+                            Batal
                         </button>
                         <button type="submit" name="update"
                                 class="px-5 py-2 rounded-md bg-[#199276] text-white">
@@ -366,7 +350,7 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                     <button type="button"
                             onclick="closeDeleteModal()"
                             class="px-5 py-2 border rounded-md">
-                        Cancel
+                        Batal
                     </button>
 
                     <button type="submit" name="delete"

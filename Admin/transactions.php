@@ -13,7 +13,10 @@ $query = "
         orders.proof,
         orders.address,
         orders.payment_method,
-        orders.created_at
+        orders.created_at,
+        orders.expedition_name,
+        orders.shipping_type,
+        orders.shipping_cost
     FROM order_items
     JOIN products ON order_items.product_id = products.id
     JOIN orders ON order_items.order_id = orders.id
@@ -33,7 +36,7 @@ if(!$result){
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
+    <title>Dasbor Admin</title>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,56 +54,27 @@ if(!$result){
 <body class="bg-gray-100 min-h-screen">
 
     <!-- NAVBAR -->
-    <div class="bg-[#0B483A] rounded-b-3xl px-8 py-6 flex items-center justify-between">
-        <h1 class="text-white text-2xl font-semibold">
-            Dashboard Admin
-        </h1>
-
-        <a href="logout.php"
-        class="bg-[#199276] text-[#0B483A] px-6 py-2 rounded-br-2xl font-medium hover:opacity-90 transition">
-            Logout
+    <div class="bg-[#0B483A] rounded-b-3xl px-8 py-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-[#199276] rounded-xl flex items-center justify-center">
+                <i data-lucide="layout-dashboard" class="w-5 h-5 text-white"></i>
+            </div>
+            <h1 class="text-white text-xl font-bold">Dasbor Admin</h1>
+        </div>
+        <a href="logout.php" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-xl font-medium transition text-sm">
+            <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
         </a>
     </div>
 
     <!-- MENU -->
     <div class="px-8 mt-4 flex justify-center">
         <ul class="flex gap-8 text-sm text-gray-400">
-            <li>
-                <a href="dashboard.php"
-                class="hover:text-[#0B483A] transition">
-                    home
-                </a>
-            </li>
-            <li>
-                <a href="users.php"
-                class="hover:text-[#0B483A] transition">
-                    user management
-                </a>
-            </li>
-            <li>
-                <a href="products.php"
-                class="hover:text-[#0B483A] transition">
-                    product management
-                </a>
-            </li>
-            <li>
-                <a href="reports.php"
-                class="hover:text-[#0B483A] transition">
-                    generate reports
-                </a>
-            </li>
-            <li>
-                <a href="transactions.php"
-                class="text-[#0B483A] font-semibold">
-                    transaction management
-                </a>
-            </li>
-            <li>
-                <a href="backup.php"
-                class="hover:text-[#0B483A] transition">
-                    data backup/restore
-                </a>
-            </li>
+            <li><a href="dashboard.php" class="hover:text-[#0B483A] transition">beranda</a></li>
+            <li><a href="users.php" class="hover:text-[#0B483A] transition">manajemen pengguna</a></li>
+            <li><a href="products.php" class="hover:text-[#0B483A] transition">manajemen produk</a></li>
+            <li><a href="reports.php" class="hover:text-[#0B483A] transition">laporan</a></li>
+            <li><a href="transactions.php" class="text-[#0B483A] font-semibold transition">manajemen transaksi</a></li>
+            <li><a href="backup.php" class="hover:text-[#0B483A] transition">backup data</a></li>
         </ul>
     </div>
 
@@ -113,12 +87,12 @@ if(!$result){
         <thead class="bg-[#0B483A] text-white">
             <tr>
                 <th class="p-3">Product</th>
-                <th class="p-3">Customer</th>
-                <th class="p-3">Category</th>
+                <th class="p-3">Pelanggan</th>
+                <th class="p-3">Kategori</th>
                 <th class="p-3">Qty</th>
-                <th class="p-3">Price</th>
-                <th class="p-3">POP</th>
-                <th class="p-3">Address</th>
+                <th class="p-3">Harga</th>
+                <th class="p-3">Pengiriman</th>
+                <th class="p-3">Alamat</th>
                 <th class="p-3">Payment</th>
                 <th class="p-3">Receipt</th>
             </tr>
@@ -144,12 +118,10 @@ if(!$result){
                     Rp<?= number_format($row['subtotal'], 0, ',', '.'); ?>
                 </td>
 
-                <td class="p-3 text-center">
-                    <?php if($row['proof']): ?>
-                        <button onclick="openProofModal('<?= $row['proof']; ?>')"
-                            class="bg-blue-500 text-white px-3 py-1 rounded">
-                            View
-                        </button>
+                <td class="p-3 text-sm">
+                    <?php if($row['expedition_name']): ?>
+                        <div class="font-bold text-[#0B483A]"><?= $row['expedition_name']; ?></div>
+                        <div class="text-xs text-gray-500"><?= $row['shipping_type']; ?></div>
                     <?php else: ?>
                         <span class="text-gray-400">-</span>
                     <?php endif; ?>
@@ -203,16 +175,6 @@ if(!$result){
 
     <script>
     lucide.createIcons();
-    
-    function openProofModal(imageName) {
-    document.getElementById("proofImage").src = "../uploads/proofs/" + imageName;
-    document.getElementById("proofModal").classList.remove("hidden");
-    document.getElementById("proofModal").classList.add("flex");
-    }
-
-    function closeModal() {
-        document.getElementById("proofModal").classList.add("hidden");
-    }
     </script>
 
 </body>

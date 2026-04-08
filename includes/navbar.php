@@ -17,7 +17,7 @@ if(session_status() === PHP_SESSION_NONE){
 $count = 0;
 
 if(isset($_SESSION['cart'])){
-    $count = array_sum($_SESSION['cart']); // total qty
+    $count = count($_SESSION['cart']); // total unique products
 }
 ?>
 
@@ -30,7 +30,7 @@ flex items-center justify-between px-10 py-5">
     <div class="flex items-center gap-6 text-sm">
 
         <a href="index.php" class="text-white hover:opacity-80 transition">
-            Home
+            Beranda
         </a>
 
         <!-- DROPDOWN SHOP (pindah ke sini) -->
@@ -38,7 +38,7 @@ flex items-center justify-between px-10 py-5">
 
             <button id="shopButton"
                 class="flex items-center gap-2 text-white hover:opacity-80 transition">
-                Shop
+                Belanja
                 <svg id="arrowIcon" xmlns="http://www.w3.org/2000/svg"
                     class="w-4 h-4 transition-transform duration-300"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,22 +57,22 @@ flex items-center justify-between px-10 py-5">
 
                 <a href="category.php?kategori=Shirt"
                 class="block px-5 py-3 hover:bg-white/20 transition">
-                    Shirt
+                    Kemeja
                 </a>
 
                 <a href="category.php?kategori=Tshirt"
                 class="block px-5 py-3 hover:bg-white/20 transition">
-                    T-Shirt
+                    Kaos
                 </a>
 
                 <a href="category.php?kategori=Pants"
                 class="block px-5 py-3 hover:bg-white/20 transition">
-                    Pants
+                    Celana
                 </a>
 
                 <a href="category.php?kategori=Shoes"
                 class="block px-5 py-3 hover:bg-white/20 transition">
-                    Shoes
+                    Sepatu
                 </a>
 
             </div>
@@ -104,6 +104,41 @@ flex items-center justify-between px-10 py-5">
         <?php endif; ?>
 
     </a>
+
+        <!-- NOTIFICATION BELL -->
+        <div class="relative" id="notifWrapper">
+            <button id="notifBtn" class="relative text-white hover:opacity-80 transition">
+                <i data-lucide="bell" class="w-6 h-6"></i>
+                <!-- red dot unread -->
+                <span id="notifDot" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0B5C4A]"></span>
+            </button>
+
+            <!-- Dropdown Panel -->
+            <div id="notifMenu"
+                class="absolute right-0 mt-3 w-80
+                    bg-white text-gray-800 rounded-2xl shadow-2xl border border-gray-100
+                    opacity-0 translate-y-2 scale-95 pointer-events-none
+                    transition-all duration-200 ease-out z-50">
+
+                <!-- Header -->
+                <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                    <p class="font-bold text-[#0B5C4A] text-sm">Notifikasi</p>
+                    <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">1 baru</span>
+                </div>
+
+                <!-- Notif Item -->
+                <div class="px-5 py-4 flex gap-4 hover:bg-gray-50 transition rounded-b-2xl cursor-default" onclick="markRead()">
+                    <div class="flex-shrink-0 w-10 h-10 bg-[#0B5C4A]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="mail-check" class="w-5 h-5 text-[#0B5C4A]"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-semibold text-gray-800">Detail Pengiriman Dikirim!</p>
+                        <p class="text-xs text-gray-500 mt-1 leading-relaxed">Informasi pemesanan dan detail pengiriman Anda telah dikirimkan ke alamat email terdaftar.</p>
+                        <p class="text-xs text-[#199276] font-medium mt-2">Cek email Anda sekarang →</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="flex items-center gap-4">
 
@@ -167,6 +202,38 @@ flex items-center justify-between px-10 py-5">
             isOpen = false;
         }
     });
+</script>
+
+<script>
+    // === NOTIFICATION BELL ===
+    const notifBtn = document.getElementById('notifBtn');
+    const notifMenu = document.getElementById('notifMenu');
+    let notifOpen = false;
+
+    notifBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        notifOpen = !notifOpen;
+        if(notifOpen){
+            notifMenu.classList.remove('opacity-0','translate-y-2','scale-95','pointer-events-none');
+            notifMenu.classList.add('opacity-100','translate-y-0','scale-100');
+        } else {
+            notifMenu.classList.add('opacity-0','translate-y-2','scale-95','pointer-events-none');
+            notifMenu.classList.remove('opacity-100','translate-y-0','scale-100');
+        }
+    });
+
+    document.addEventListener('click', function(e){
+        if(!notifMenu.contains(e.target) && !notifBtn.contains(e.target)){
+            notifMenu.classList.add('opacity-0','translate-y-2','scale-95','pointer-events-none');
+            notifMenu.classList.remove('opacity-100','translate-y-0','scale-100');
+            notifOpen = false;
+        }
+    });
+
+    function markRead(){
+        document.getElementById('notifDot').style.display = 'none';
+        document.querySelector('#notifMenu .text-xs.bg-red-100').style.display = 'none';
+    }
 </script>
 
 <script>

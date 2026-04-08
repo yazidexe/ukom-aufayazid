@@ -8,8 +8,11 @@ if(!isset($_SESSION['user_id'])){
 }
 
 $id = $_SESSION['user_id'];
-$query = mysqli_query($conn, "SELECT * FROM users WHERE id='$id'");
-$user = mysqli_fetch_assoc($query);
+$stmt = $conn->prepare("SELECT * FROM users WHERE id=?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$user = $stmt->get_result()->fetch_assoc();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -25,13 +28,23 @@ $user = mysqli_fetch_assoc($query);
 
     <h2 class="text-xl font-semibold mb-4">Edit Profile</h2>
 
+    <?php if(isset($_SESSION['error'])): ?>
+        <div class="bg-red-100 text-red-700 p-2 mb-3 rounded">
+            <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+        </div>
+    <?php endif; ?>
+
     <form action="update_profile.php" method="POST">
 
-        <input type="text" name="name" value="<?= $user['name']; ?>" 
+        <input type="text" name="name" value="<?= htmlspecialchars($user['name']); ?>" 
             class="w-full border p-2 mb-3 rounded">
 
-        <input type="email" name="email" value="<?= $user['email']; ?>" 
+        <input type="email" name="email" value="<?= htmlspecialchars($user['email']); ?>" 
             class="w-full border p-2 mb-3 rounded">
+
+        <!-- TAMBAHAN ALAMAT -->
+        <label class="text-sm text-gray-600">Alamat:</label>
+        <textarea name="address" class="w-full border p-2 mb-3 rounded" rows="3"><?= htmlspecialchars($user['address']); ?></textarea>
 
         <button class="bg-[#199276] text-white px-4 py-2 rounded">
             Save

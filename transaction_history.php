@@ -15,7 +15,7 @@ if(!$user_id){
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Transaction History</title>
+<title>Riwayat Transaksi - Azula</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -31,8 +31,8 @@ if(!$user_id){
 <?php if(!$user_id): ?>
 
     <div class="text-center text-gray-500 mt-20">
-        <p class="text-lg">Your transaction history hasn't appeared yet.</p>
-        <p class="text-sm mt-2">Please log in first to view your shopping history.</p>
+        <p class="text-lg">Riwayat transaksi Anda belum muncul.</p>
+        <p class="text-sm mt-2">Silakan masuk (login) terlebih dahulu untuk melihat histori belanja.</p>
     </div>
 
 <?php else: ?>
@@ -52,8 +52,15 @@ if(!$user_id){
                 <p class="text-sm text-gray-400"><?= $order['created_at']; ?></p>
             </div>
 
-            <p class="text-sm mt-2">Method: <?= $order['payment_method']; ?></p>
-            <p class="text-sm">Address: <?= $order['address']; ?></p>
+            <p class="text-sm mt-2">Metode: <?= strtoupper($order['payment_method']); ?></p>
+            <p class="text-sm">Alamat: <?= $order['address']; ?></p>
+            
+            <?php if(!empty($order['expedition_name'])): ?>
+            <p class="text-sm mt-2 text-gray-600">
+                Ekspedisi: <span class="font-medium text-[#0B5C4A]"><?= $order['expedition_name']; ?> (<?= $order['shipping_type']; ?>)</span>
+                - Ongkir: Rp <?= number_format($order['shipping_cost'] ?? 0,0,',','.'); ?>
+            </p>
+            <?php endif; ?>
 
             <p class="text-lg font-semibold text-[#0B5C4A] mt-3">
                 Total: Rp <?= number_format($order['total'],0,',','.'); ?>

@@ -31,24 +31,28 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
 </head>
 <body class="bg-gray-100 min-h-screen">
 
-<!-- NAVBAR (reuse) -->
-<div class="bg-[#0B483A] rounded-b-3xl px-8 py-6 flex items-center justify-between">
-    <h1 class="text-white text-2xl font-semibold">Dashboard Admin</h1>
-    <a href="logout.php"
-       class="bg-[#199276] text-[#0B483A] px-6 py-2 rounded-br-2xl font-medium hover:opacity-90 transition">
-        Logout
+<!-- NAVBAR -->
+<div class="bg-[#0B483A] rounded-b-3xl px-8 py-5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-[#199276] rounded-xl flex items-center justify-center">
+            <i data-lucide="layout-dashboard" class="w-5 h-5 text-white"></i>
+        </div>
+        <h1 class="text-white text-xl font-bold">Dasbor Admin</h1>
+    </div>
+    <a href="logout.php" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-xl font-medium transition text-sm">
+        <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
     </a>
 </div>
 
-<!-- MENU (reuse) -->
+<!-- MENU -->
 <div class="px-8 mt-4 flex justify-center">
     <ul class="flex gap-8 text-sm text-gray-400">
-        <li><a href="dashboard.php" class="hover:text-[#0B483A]">home</a></li>
-        <li><a href="users.php" class="text-[#0B483A] font-semibold">user management</a></li>
-        <li><a href="products.php" class="hover:text-[#0B483A]">product management</a></li>
-        <li><a href="reports.php" class="hover:text-[#0B483A]">generate reports</a></li>
-        <li><a href="transactions.php" class="hover:text-[#0B483A]">transaction management</a></li>
-        <li><a href="backup.php" class="hover:text-[#0B483A]">data backup/restore</a></li>
+        <li><a href="dashboard.php" class="hover:text-[#0B483A] transition">beranda</a></li>
+        <li><a href="users.php" class="text-[#0B483A] font-semibold transition">manajemen pengguna</a></li>
+        <li><a href="products.php" class="hover:text-[#0B483A] transition">manajemen produk</a></li>
+        <li><a href="reports.php" class="hover:text-[#0B483A] transition">laporan</a></li>
+        <li><a href="transactions.php" class="hover:text-[#0B483A] transition">manajemen transaksi</a></li>
+        <li><a href="backup.php" class="hover:text-[#0B483A] transition">backup data</a></li>
     </ul>
 </div>
 
@@ -74,8 +78,8 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
                     <th class="px-4 py-3 text-left">Username</th>
                     <th class="px-4 py-3 text-left">E-mail</th>
                     <th class="px-4 py-3 text-left">Password</th>
-                    <th class="px-4 py-3 text-center">Actions</th>
-                    <th class="px-4 py-3 text-left">Date</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
+                    <th class="px-4 py-3 text-left">Tanggal</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,7 +107,7 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
                                         onclick="openDeleteModal('<?= $row['id']; ?>', '<?= $row['username']; ?>')"
                                         class="bg-red-500 text-white px-3 py-1 rounded flex items-center gap-1 hover:opacity-90">
                                         <i data-lucide="trash" class="w-4 h-4"></i>
-                                        Delete
+                                        Hapus
                                     </button>
                                 </div>
                             </td>
@@ -161,7 +165,7 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
                     <div class="flex justify-end gap-3 pt-4">
                         <button type="button" onclick="closeModal()"
                             class="px-4 py-2 rounded-lg border hover:bg-gray-100">
-                            Cancel
+                            Batal
                         </button>
                         <button type="submit"
                             class="px-5 py-2 rounded-lg bg-[#0B483A] text-white hover:opacity-90">
@@ -210,7 +214,7 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
                 <div class="flex justify-end gap-3 pt-4">
                     <button type="button" onclick="closeEditModal()"
                         class="px-4 py-2 rounded-lg border">
-                        Cancel
+                        Batal
                     </button>
                     <button type="submit"
                         class="px-5 py-2 rounded-lg bg-[#0B483A] text-white hover:opacity-90">
@@ -241,12 +245,12 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
 
                 <button type="button" onclick="closeDeleteModal()"
                     class="px-4 py-2 rounded-lg border">
-                    Cancel
+                    Batal
                 </button>
 
                 <button type="submit"
                     class="px-5 py-2 rounded-lg bg-red-500 text-white hover:opacity-90">
-                    Delete
+                    Hapus
                 </button>
             </form>
         </div>

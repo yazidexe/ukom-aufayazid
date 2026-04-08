@@ -36,7 +36,7 @@ body { font-family: 'Poppins', sans-serif; }
 
     <!-- TITLE -->
     <h2 class="text-center text-5xl font-bold text-[#199276] mb-4">
-        SIGN UP
+        DAFTAR
     </h2>
 
     <!-- NAME -->
@@ -45,7 +45,7 @@ body { font-family: 'Poppins', sans-serif; }
             type="text"
             name="name"
             required
-            placeholder="full name"
+            placeholder="nama lengkap"
             class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                    placeholder:italic placeholder:text-[#199276]
                    text-[#199276] placeholder:text-sm focus:outline-none"
@@ -72,7 +72,7 @@ body { font-family: 'Poppins', sans-serif; }
             name="password"
             id="password"
             required
-            placeholder="password"
+            placeholder="kata sandi"
             class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                    placeholder:italic placeholder:text-[#199276]
                    text-[#199276] placeholder:text-sm focus:outline-none"
@@ -91,7 +91,7 @@ body { font-family: 'Poppins', sans-serif; }
             name="confirm_password"
             id="confirmPassword"
             required
-            placeholder="confirm password"
+            placeholder="konfirmasi kata sandi"
             class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                    placeholder:italic placeholder:text-[#199276]
                    text-[#199276] placeholder:text-sm focus:outline-none"
@@ -107,14 +107,14 @@ body { font-family: 'Poppins', sans-serif; }
         hover:-translate-y-1
         hover:shadow-xl"
     >
-        Confirm
+        Konfirmasi
     </button>
 
     <!-- LOGIN LINK -->
     <p class="text-center text-sm font-thin text-white mt-6">
-        Already have an account?
+        Sudah punya akun?
         <a href="login.php" class="font-bold text-[#199276] hover:underline">
-            Login
+            Masuk
         </a>
     </p>
 

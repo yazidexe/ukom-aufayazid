@@ -7,10 +7,15 @@ $user_id = $_SESSION['user_id'];
 
 $method = $_POST['payment_method'];
 $products = $_POST['products'];
-if($method == 'transfer'){
-    $address = $_POST['address_transfer'] ?? '';
+$address = $_POST['address'] ?? '';
+
+$expedition_name = $_POST['expedition_name'] ?? 'JNE';
+$shipping_type = $_POST['shipping_type'] ?? 'Reguler';
+
+if($shipping_type === 'Ekspres'){
+    $shipping_cost = 30000;
 } else {
-    $address = $_POST['address_cod'] ?? '';
+    $shipping_cost = 15000;
 }
 $cart = $_SESSION['cart'] ?? [];
 
@@ -34,6 +39,8 @@ while($row = mysqli_fetch_assoc($query)){
         'price' => $row['price']
     ];
 }
+
+$total += $shipping_cost;
 
 if(!isset($_POST['products'])){
     die("Produk tidak ditemukan");
@@ -78,8 +85,8 @@ if($_POST['payment_method'] == 'transfer' && empty($_FILES['proof']['name'])){
 // 🔥 INSERT ORDER
 $date = date('Y-m-d H:i:s');
 
-mysqli_query($conn, "INSERT INTO orders (user_id, address, payment_method, total, proof, created_at)
-VALUES ('$user_id','$address','$method','$total','$proofName','$date')");
+mysqli_query($conn, "INSERT INTO orders (user_id, address, payment_method, total, proof, created_at, expedition_name, shipping_type, shipping_cost)
+VALUES ('$user_id','$address','$method','$total','$proofName','$date', '$expedition_name', '$shipping_type', '$shipping_cost')");
 
 $order_id = mysqli_insert_id($conn);
 

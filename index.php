@@ -79,8 +79,8 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
     <div class="max-w-xl text-center md:text-left">
 
         <h1 class="text-4xl sm:text-5xl md:text-7xl font-semibold leading-tight">
-            <span class="text-[#199276] font-medium">Imposible is</span><br>
-            <span class="font-bold text-white">Nothing</span>
+            <span class="text-[#199276] font-medium">Belanja Tanpa</span><br>
+            <span class="font-bold text-white">Batas</span>
         </h1>
 
         <a href="category.php?kategori=Shirt"
@@ -88,7 +88,7 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
             transition-all duration-300
             hover:bg-white hover:text-[#0B5C4A]
             hover:scale-105 active:scale-95 text-center">
-                Explore More
+                Jelajahi Sekarang
         </a>
 
     </div>
@@ -104,7 +104,7 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
 <!-- CAROUSEL -->
 <section class="mt-16 px-6 py-12"> 
     <h1 class="text-center text-3xl font-medium text-gray-900 mb-16">
-        What's New?
+        Produk Terbaru
     </h1>
 
     <div class="max-w-[1250px] mx-auto overflow-hidden rounded-2xl relative">
@@ -132,7 +132,7 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
 <section class="px-10 py-12 max-w-[1250px] mx-auto">
     
     <h1 class="text-3xl font-semibold text-[#0B5C4A] mt-10 mb-10 text-center">
-        Our Products
+        Produk Kami
     </h1>
 
     <div class="grid grid-cols-3 gap-10">
@@ -178,7 +178,7 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
                         <button type="button"
                             onclick="event.stopPropagation(); handleAddToCart(<?= $product['id']; ?>)"
                             class="w-full py-2 bg-[#0B5C4A] text-white rounded-lg hover:opacity-90 transition">
-                            Add to Cart
+                            Masukkan Keranjang
                         </button>
                     </form>
                 </div>
@@ -262,7 +262,7 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
             <!-- BUTTON -->
             <button id="modalBtn"
                 class="mt-6 py-3 rounded-xl bg-[#0B5C4A] text-white hover:opacity-90 transition">
-                Add to Cart
+                Masukkan Keranjang
             </button>
 
         </div>
@@ -364,11 +364,11 @@ function showToast(message, image = null){
         const isLogin = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
 
         if(!isLogin){
-            btn.innerText = "Login First";
+            btn.innerText = "Harap Login Dahulu";
             btn.classList.add("bg-gray-400","cursor-not-allowed");
             btn.onclick = () => showToast("Login dulu ya!", "assets/alert-login.png");
         } else {
-            btn.innerText = "Add to Cart";
+            btn.innerText = "Masukkan Keranjang";
             btn.classList.remove("bg-gray-400","cursor-not-allowed");
 
             btn.onclick = () => {

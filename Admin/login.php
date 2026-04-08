@@ -28,8 +28,8 @@ session_start();
 <div class="w-1/2 bg-white relative hidden md:block">
     <div class="absolute bottom-12 left-12">
         <h1 class="text-[70px] font-bold leading-tight">
-            Login <br> Pages<br>
-            for <br><span class="text-[#0B483A]">Admin</span>
+            Halaman <br> Masuk<br>
+            untuk <br><span class="text-[#0B483A]">Admin</span>
         </h1>
     </div>
 </div>
@@ -41,7 +41,7 @@ session_start();
 
         <!-- Title -->
         <h2 class="text-center text-5xl font-bold text-[#199276] mb-10">
-            LOGIN
+            MASUK
         </h2>
 
         <!-- Username -->
@@ -50,7 +50,7 @@ session_start();
                 type="text"
                 name="username"
                 required
-                placeholder="username"
+                placeholder="nama pengguna"
                 class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                        placeholder:italic placeholder:text-[#199276]
                        text-[#199276] placeholder:text-sm   focus:outline-none"
@@ -64,7 +64,7 @@ session_start();
                 name="password"
                 id="password"
                 required
-                placeholder="password"
+                placeholder="kata sandi"
                 class="w-full px-8 py-5 bg-transparent border border-[#199276] rounded-full
                        placeholder:italic placeholder:text-[#199276]
                        text-[#199276] placeholder:text-sm focus:outline-none"
@@ -87,7 +87,7 @@ session_start();
                 active:translate-y-0
                 active:shadow-md"
         >
-            Login
+            Masuk
         </button>
 
 
