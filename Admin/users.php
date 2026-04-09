@@ -181,48 +181,54 @@ $result = mysqli_query($conn, "SELECT * FROM officers ORDER BY created_at DESC")
 
     <!-- MODAL EDIT OFFICER -->
     <div id="editOfficerModal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl w-full max-w-md p-6">
+        
+        <div class="bg-white rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
 
-            <h2 class="text-xl font-semibold mb-4 text-[#0B483A]">
-                Edit Officer
-            </h2>
+            <!-- HEADER MODAL -->
+            <div class="bg-[#0B483A] rounded-b-3xl px-6 py-5 flex items-center justify-between relative">
+                <h2 class="text-white text-xl font-semibold">
+                    Edit Officer
+                </h2>
+            </div>
 
-            <form action="user_update.php" method="POST" class="space-y-4">
+            <div class="p-6">
+                <form action="user_update.php" method="POST" class="space-y-4">
 
-                <input type="hidden" name="id" id="edit_id">
+                    <input type="hidden" name="id" id="edit_id">
 
-                <div>
-                    <label class="text-sm text-gray-600">Username</label>
-                    <input type="text" name="username" id="edit_username" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none">
-                </div>
+                    <div>
+                        <label class="text-sm text-gray-600">Username</label>
+                        <input type="text" name="username" id="edit_username" required
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#199276] transition-all">
+                    </div>
 
-                <div>
-                    <label class="text-sm text-gray-600">E-mail</label>
-                    <input type="email" name="email" id="edit_email" required
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none">
-                </div>
+                    <div>
+                        <label class="text-sm text-gray-600">E-mail</label>
+                        <input type="email" name="email" id="edit_email" required
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#199276] transition-all">
+                    </div>
 
-                <div>
-                    <label class="text-sm text-gray-600">
-                        Password <span class="text-xs text-gray-400">(kosongkan jika tidak diubah)</span>
-                    </label>
-                    <input type="password" name="password"
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none">
-                </div>
+                    <div>
+                        <label class="text-sm text-gray-600 block mb-1">
+                            Password <span class="text-xs text-[#199276] font-medium">(biarkan kosong jika tidak ingin diubah)</span>
+                        </label>
+                        <input type="password" name="password" placeholder="Masukkan password baru..."
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#199276] transition-all">
+                    </div>
 
-                <div class="flex justify-end gap-3 pt-4">
-                    <button type="button" onclick="closeEditModal()"
-                        class="px-4 py-2 rounded-lg border">
-                        Batal
-                    </button>
-                    <button type="submit"
-                        class="px-5 py-2 rounded-lg bg-[#0B483A] text-white hover:opacity-90">
-                        Update
-                    </button>
-                </div>
+                    <div class="flex justify-end gap-3 pt-5 border-t border-gray-100 mt-6">
+                        <button type="button" onclick="closeEditModal()"
+                            class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 hover:text-gray-800 transition-all">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="px-5 py-2.5 rounded-xl bg-[#0B483A] text-white font-medium shadow-md shadow-[#0B483A]/20 hover:-translate-y-0.5 hover:shadow-lg hover:bg-[#083b30] transition-all">
+                            Update Officer
+                        </button>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 

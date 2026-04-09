@@ -89,28 +89,54 @@ flex items-center justify-between px-10 py-5">
     <!-- RIGHT -->
     <div class="flex items-center gap-5 text-white">
 
-    <a href="cart.php" class="relative">
-    
-        <!-- ICON -->
-        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
-
-        <!-- BADGE -->
-        <?php if($count > 0): ?>
-        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs 
-                w-5 h-5 flex items-center justify-center rounded-full
-                animate-bounce">
-            <?= $count; ?>
-        </span>
-        <?php endif; ?>
-
-    </a>
-
         <!-- NOTIFICATION BELL -->
         <div class="relative" id="notifWrapper">
-            <button id="notifBtn" class="relative text-white hover:opacity-80 transition">
+            <?php
+            $notifications = [];
+            if(isset($_SESSION['user_id'])){
+                $u_id = $_SESSION['user_id'];
+                $q_orders = mysqli_query($conn, "SELECT id, status, created_at FROM orders WHERE user_id='$u_id' ORDER BY id DESC LIMIT 5");
+                if($q_orders){
+                    while($row_o = mysqli_fetch_assoc($q_orders)){
+                        $order_id = $row_o['id'];
+                        $status = $row_o['status'];
+                        $created_at = $row_o['created_at'];
+
+                        $q_items = mysqli_query($conn, "SELECT products.name FROM order_items JOIN products ON order_items.product_id = products.id WHERE order_items.order_id='$order_id'");
+                        $item_names = [];
+                        while($i = mysqli_fetch_assoc($q_items)){
+                            $item_names[] = $i['name'];
+                        }
+                        $produk_str = implode(', ', $item_names);
+
+                        if($status === 'accepted'){
+                            $notifications[] = [
+                                'title' => 'Pesanan Diterima!',
+                                'desc' => 'Admin telah menyetujui pesanan Anda. Email pengantaran sudah diberikan.',
+                                'icon' => 'mail-check',
+                                'icon_color' => 'text-[#0B5C4A]',
+                                'icon_bg' => 'bg-[#0B5C4A]/10'
+                            ];
+                        } else if($status === 'pending'){
+                            $notifications[] = [
+                                'title' => 'Berhasil Checkout',
+                                'desc' => 'Anda berhasil checkout produk: ' . $produk_str . '.',
+                                'icon' => 'shopping-bag',
+                                'icon_color' => 'text-blue-600',
+                                'icon_bg' => 'bg-blue-50'
+                            ];
+                        }
+                    }
+                }
+            }
+            $notif_count = count($notifications);
+            ?>
+
+            <button id="notifBtn" class="relative flex items-center justify-center text-white hover:opacity-80 transition h-6 w-6">
                 <i data-lucide="bell" class="w-6 h-6"></i>
-                <!-- red dot unread -->
+                <?php if($notif_count > 0): ?>
                 <span id="notifDot" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#0B5C4A]"></span>
+                <?php endif; ?>
             </button>
 
             <!-- Dropdown Panel -->
@@ -123,22 +149,49 @@ flex items-center justify-between px-10 py-5">
                 <!-- Header -->
                 <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
                     <p class="font-bold text-[#0B5C4A] text-sm">Notifikasi</p>
-                    <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium">1 baru</span>
+                    <?php if($notif_count > 0): ?>
+                    <span class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full font-medium"><?= $notif_count; ?> baru</span>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Notif Item -->
-                <div class="px-5 py-4 flex gap-4 hover:bg-gray-50 transition rounded-b-2xl cursor-default" onclick="markRead()">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#0B5C4A]/10 rounded-full flex items-center justify-center">
-                        <i data-lucide="mail-check" class="w-5 h-5 text-[#0B5C4A]"></i>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-semibold text-gray-800">Detail Pengiriman Dikirim!</p>
-                        <p class="text-xs text-gray-500 mt-1 leading-relaxed">Informasi pemesanan dan detail pengiriman Anda telah dikirimkan ke alamat email terdaftar.</p>
-                        <p class="text-xs text-[#199276] font-medium mt-2">Cek email Anda sekarang →</p>
-                    </div>
+                <div class="max-h-80 overflow-y-auto">
+                    <?php if(empty($notifications)): ?>
+                        <div class="px-5 py-6 text-center text-gray-500 text-sm">Belum ada notifikasi</div>
+                    <?php else: ?>
+                        <?php foreach($notifications as $n): ?>
+                        <div class="px-5 py-4 flex gap-4 hover:bg-gray-50 transition border-b border-gray-50 cursor-pointer" onclick="markRead()">
+                            <div class="flex-shrink-0 w-10 h-10 <?= $n['icon_bg']; ?> rounded-full flex items-center justify-center">
+                                <i data-lucide="<?= $n['icon']; ?>" class="w-5 h-5 <?= $n['icon_color']; ?>"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold text-gray-800"><?= htmlspecialchars($n['title']); ?></p>
+                                <p class="text-xs text-gray-500 mt-1 leading-relaxed"><?= htmlspecialchars($n['desc']); ?></p>
+                                <?php if($n['title'] === 'Pesanan Diterima!'): ?>
+                                    <p class="text-[11px] text-[#199276] font-medium mt-1">Cek email Anda secara berkala</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+
+        <a href="cart.php" class="relative flex items-center justify-center h-6 w-6">
+        
+            <!-- ICON -->
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+
+            <!-- BADGE -->
+            <?php if($count > 0): ?>
+            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs 
+                    w-5 h-5 flex items-center justify-center rounded-full
+                    animate-bounce">
+                <?= $count; ?>
+            </span>
+            <?php endif; ?>
+
+        </a>
 
         <div class="flex items-center gap-4">
 

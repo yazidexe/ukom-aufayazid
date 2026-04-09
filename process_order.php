@@ -94,6 +94,9 @@ $order_id = mysqli_insert_id($conn);
 foreach($data as $item){
     mysqli_query($conn, "INSERT INTO order_items (order_id, product_id, qty, price)
     VALUES ('$order_id','".$item['id']."','".$item['qty']."','".$item['price']."')");
+    
+    // 🔥 UPDATE STOCK
+    mysqli_query($conn, "UPDATE products SET stock = stock - ".$item['qty']." WHERE id = '".$item['id']."'");
 }
 
 // 🔥 CLEAR CART

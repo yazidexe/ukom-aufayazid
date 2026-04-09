@@ -10,8 +10,10 @@ $user = mysqli_fetch_assoc($query);
 
 if($user && password_verify($password, $user['password'])){
 
-    // 🔥 RESET SESSION DULU (INI KUNCI)
-    session_unset();
+    // 🔥 CLEAR CUSTOMER SESSION ONLY
+    unset($_SESSION['user_id']);
+    unset($_SESSION['user_name']);
+    unset($_SESSION['avatar']);
 
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_name'] = $user['name'];

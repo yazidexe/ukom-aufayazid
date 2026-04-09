@@ -79,8 +79,8 @@ px-6 md:px-20 py-16 md:py-0 min-h-screen bg-[#0B5C4A]">
     <div class="max-w-xl text-center md:text-left">
 
         <h1 class="text-4xl sm:text-5xl md:text-7xl font-semibold leading-tight">
-            <span class="text-[#199276] font-medium">Belanja Tanpa</span><br>
-            <span class="font-bold text-white">Batas</span>
+            <span class="text-[#199276] font-medium">Nothing is</span><br>
+            <span class="font-bold text-white">Impossible</span>
         </h1>
 
         <a href="category.php?kategori=Shirt"

@@ -99,7 +99,7 @@ $officerName = $_SESSION['officer_name'] ?? 'Petugas';
                     Semua Selesai!
                 </div>
                 <?php endif; ?>
-                <a href="transactions.php" class="bg-[#199276] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-[#148066] transition">
+                <a href="reports.php?tab=transaction" class="bg-[#199276] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-[#148066] transition">
                     Proses Pesanan <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
@@ -117,7 +117,7 @@ $officerName = $_SESSION['officer_name'] ?? 'Petugas';
                 </div>
             </a>
 
-            <a href="transactions.php" class="card-hover bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4">
+            <a href="reports.php?tab=transaction" class="card-hover bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-center gap-4">
                 <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <i data-lucide="shopping-bag" class="w-6 h-6 text-indigo-500"></i>
                 </div>
@@ -127,7 +127,7 @@ $officerName = $_SESSION['officer_name'] ?? 'Petugas';
                 </div>
             </a>
 
-            <a href="transactions.php" class="card-hover bg-yellow-400 rounded-2xl p-5 shadow-sm flex items-center gap-4">
+            <a href="reports.php?tab=transaction" class="card-hover bg-yellow-400 rounded-2xl p-5 shadow-sm flex items-center gap-4">
                 <div class="w-12 h-12 bg-white/30 rounded-xl flex items-center justify-center flex-shrink-0">
                     <i data-lucide="clock" class="w-6 h-6 text-yellow-900"></i>
                 </div>
@@ -157,7 +157,7 @@ $officerName = $_SESSION['officer_name'] ?? 'Petugas';
                     </div>
                     <h3 class="font-bold text-gray-800">Pesanan Terkini</h3>
                 </div>
-                <a href="transactions.php" class="text-sm text-[#199276] font-semibold hover:underline flex items-center gap-1">
+                <a href="reports.php?tab=transaction" class="text-sm text-[#199276] font-semibold hover:underline flex items-center gap-1">
                     Lihat Semua <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>

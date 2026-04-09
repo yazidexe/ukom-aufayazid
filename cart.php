@@ -50,8 +50,7 @@ body { font-family: 'Poppins', sans-serif; }
 <?php if(empty($products)): ?>
     <div class="bg-white p-12 rounded-md shadow-sm border border-gray-200 text-center">
         <i data-lucide="shopping-cart" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
-        <p class="text-gray-500 mb-6 font-medium">Keranjang Anda masih kosong.</p>
-        <a href="index.php" class="inline-block bg-[#0B5C4A] text-white px-8 py-3 rounded-md hover:bg-[#084b3c] transition-colors">Mulai Belanja</a>
+        <p class="text-gray-500 font-medium">Keranjang Anda masih kosong.</p>
     </div>
 <?php endif; ?>
 

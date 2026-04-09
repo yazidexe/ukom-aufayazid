@@ -274,51 +274,57 @@ $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
         <div id="modalEditProduct"
             class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
 
-            <div class="bg-white w-full max-w-lg rounded-xl p-6 relative">
+            <div class="bg-[#EDEDED] w-full max-w-xl rounded-xl overflow-hidden shadow-2xl">
                 <!-- Header -->
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold text-[#0B483A]">
-                        Edit Product
+                <div class="bg-[#0B483A] rounded-b-3xl py-6 px-6 flex items-center justify-center relative">
+                    <h2 class="text-white text-xl font-semibold">
+                        Edit Produk
                     </h2>
                 </div>
 
-                <form action="products_edit.php" method="POST" enctype="multipart/form-data" class="space-y-4">
+                <form action="products_edit.php" method="POST" enctype="multipart/form-data" class="px-10 py-8 space-y-4">
 
                     <input type="hidden" name="id" id="edit_id">
                     <input type="hidden" name="old_picture" id="old_picture">
 
                     <div>
-                        <label class="text-sm text-gray-600">Product Name</label>
+                        <label class="text-sm text-gray-500 font-medium mb-1.5 block">Nama Produk</label>
                         <input type="text" name="name" id="edit_name" required
-                            class="w-full border rounded-md px-4 py-2">
+                            class="w-full bg-[#D9D9D9] px-4 py-3 rounded-md outline-none text-sm focus:ring-2 focus:ring-[#199276] transition-all">
+                    </div>
+
+                    <div class="flex gap-4 w-full">
+                        <div class="w-1/2">
+                            <label class="text-sm text-gray-500 font-medium mb-1.5 block">Stok Barang</label>
+                            <input type="number" name="stock" id="edit_stock" required
+                                class="w-full bg-[#D9D9D9] px-4 py-3 rounded-md outline-none text-sm focus:ring-2 focus:ring-[#199276] transition-all">
+                        </div>
+
+                        <div class="w-1/2">
+                            <label class="text-sm text-gray-500 font-medium mb-1.5 block">Harga (Rp)</label>
+                            <input type="number" name="price" id="edit_price" required
+                                class="w-full bg-[#D9D9D9] px-4 py-3 rounded-md outline-none text-sm focus:ring-2 focus:ring-[#199276] transition-all">
+                        </div>
                     </div>
 
                     <div>
-                        <label class="text-sm text-gray-600">Stok</label>
-                        <input type="number" name="stock" id="edit_stock" required
-                            class="w-full border rounded-md px-4 py-2">
+                        <label class="text-sm text-gray-500 font-medium mb-1.5 block">
+                            Gambar Produk <span class="text-xs text-[#199276]">(Opsional - Abaikan jika tidak ganti)</span>
+                        </label>
+                        <div class="w-full bg-[#D9D9D9] px-4 py-2.5 rounded-md text-sm border-2 border-dashed border-gray-400 hover:border-[#199276] transition-colors">
+                            <input type="file" name="picture" accept="image/*"
+                                class="w-full outline-none text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#199276] file:text-white hover:file:bg-[#148066] cursor-pointer">
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="text-sm text-gray-600">Harga</label>
-                        <input type="number" name="price" id="edit_price" required
-                            class="w-full border rounded-md px-4 py-2">
-                    </div>
-
-                    <div>
-                        <label class="text-sm text-gray-600">Picture (optional)</label>
-                        <input type="file" name="picture" accept="image/*"
-                            class="w-full border rounded-md px-4 py-2">
-                    </div>
-
-                    <div class="flex justify-end gap-2 pt-4">
+                    <div class="flex gap-4 pt-6">
                         <button type="button" onclick="closeEditModal()"
-                                class="px-5 py-2 rounded-md border">
+                                class="w-1/2 border border-[#0B483A] py-3.5 rounded-lg text-[#0B483A] font-medium hover:bg-gray-300 hover:text-[#0B483A] transition-all">
                             Batal
                         </button>
                         <button type="submit" name="update"
-                                class="px-5 py-2 rounded-md bg-[#199276] text-white">
-                            Update
+                                class="w-1/2 bg-[#199276] py-3.5 rounded-lg text-[#0B483A] font-medium hover:brightness-110 hover:scale-[1.02] shadow-md transition-all duration-200">
+                            Simpan Perubahan
                         </button>
                     </div>
                 </form>

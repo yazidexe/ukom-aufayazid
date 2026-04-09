@@ -333,9 +333,20 @@ $transactionData = mysqli_query($conn, "
 
             // aktifkan tombolnya
             const activeBtn = document.getElementById("tab-" + tabName);
-            activeBtn.classList.remove("bg-gray-200", "text-gray-700");
-            activeBtn.classList.add("bg-[#0B483A]", "text-white");
+            if(activeBtn){
+                activeBtn.classList.remove("bg-gray-200", "text-gray-700");
+                activeBtn.classList.add("bg-[#0B483A]", "text-white");
+            }
         }
+
+        // On Load Check Tab Param
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = new URLSearchParams(window.location.search);
+            const tabUrl = params.get('tab');
+            if (tabUrl && document.getElementById(tabUrl)) {
+                showTab(tabUrl);
+            }
+        });
 
         function openProofModal(imageName) {
             const modal = document.getElementById("proofModal");

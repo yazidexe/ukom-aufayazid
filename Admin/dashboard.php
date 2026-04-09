@@ -88,19 +88,19 @@ $recentResult = mysqli_query($conn, "
                     <circle cx="160" cy="60" r="100" fill="white"/>
                 </svg>
             </div>
-            <div>
+            <div class="relative z-10">
                 <p class="text-[#199276] text-sm font-medium">Selamat datang kembali 👋</p>
                 <h2 class="text-white text-2xl font-bold mt-1">Administrator</h2>
                 <p class="text-white/50 text-sm mt-1"><?= date('l, d F Y'); ?> · <?= date('H:i'); ?> WIB</p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="relative z-10 flex items-center gap-3">
                 <?php if($totalPending > 0): ?>
                 <div class="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-xl flex items-center gap-2 text-sm font-bold">
                     <i data-lucide="clock" class="w-4 h-4"></i>
                     <?= $totalPending; ?> Pesanan Pending
                 </div>
                 <?php endif; ?>
-                <a href="transactions.php" class="bg-[#199276] text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-[#148066] transition">
+                <a href="reports.php?tab=transaction" class="bg-[#199276] text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-[#148066] transition">
                     <i data-lucide="arrow-right" class="w-4 h-4"></i> Lihat Transaksi
                 </a>
             </div>
@@ -144,7 +144,7 @@ $recentResult = mysqli_query($conn, "
         </div>
 
         <!-- Transaksi -->
-        <a href="transactions.php" class="card-hover bg-[#0B483A] rounded-2xl p-5 shadow-sm flex items-center gap-4">
+        <a href="reports.php?tab=transaction" class="card-hover bg-[#0B483A] rounded-2xl p-5 shadow-sm flex items-center gap-4">
             <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
                 <i data-lucide="receipt" class="w-6 h-6 text-white"></i>
             </div>
@@ -185,7 +185,7 @@ $recentResult = mysqli_query($conn, "
                     </div>
                     <h3 class="font-bold text-gray-800">Transaksi Terbaru</h3>
                 </div>
-                <a href="transactions.php" class="text-sm text-[#199276] font-semibold hover:underline flex items-center gap-1">
+                <a href="reports.php?tab=transaction" class="text-sm text-[#199276] font-semibold hover:underline flex items-center gap-1">
                     Lihat Semua <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
