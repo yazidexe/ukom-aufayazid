@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2026 at 05:31 AM
+-- Generation Time: Apr 09, 2026 at 04:37 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,7 +65,9 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `qty`, `created_at`, `updated
 (3, 0, 0, 1, '2026-04-07 06:37:25', '2026-04-07 06:37:25'),
 (4, 0, 0, 1, '2026-04-07 06:37:26', '2026-04-07 06:37:26'),
 (5, 0, 0, 1, '2026-04-07 06:37:26', '2026-04-07 06:37:26'),
-(6, 0, 0, 1, '2026-04-07 06:37:26', '2026-04-07 06:37:26');
+(6, 0, 0, 1, '2026-04-07 06:37:26', '2026-04-07 06:37:26'),
+(7, 5, 28, 14, '2026-04-08 03:40:29', '2026-04-09 03:01:43'),
+(8, 3, 28, 1, '2026-04-08 04:10:02', '2026-04-08 04:10:02');
 
 -- --------------------------------------------------------
 
@@ -88,7 +90,7 @@ CREATE TABLE `officers` (
 --
 
 INSERT INTO `officers` (`id`, `name`, `username`, `email`, `password`, `status`, `created_at`) VALUES
-(5, '', 'yazid', 'yazid@gmail.com', '12345', 'active', '2026-02-12 00:28:38');
+(6, '', 'Fauzan', 'fauzanris@gmail.com', 'fauzan12', 'active', '2026-04-08 23:50:09');
 
 -- --------------------------------------------------------
 
@@ -104,30 +106,20 @@ CREATE TABLE `orders` (
   `proof` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `status` enum('pending','accepted') DEFAULT 'pending'
+  `status` enum('pending','processing','shipped','delivered') DEFAULT 'pending',
+  `expedition_name` varchar(50) DEFAULT NULL,
+  `shipping_type` varchar(50) DEFAULT NULL,
+  `shipping_cost` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `address`, `payment_method`, `total`, `proof`, `created_at`, `user_id`, `status`) VALUES
-(6, 'asd', 'transfer', 1000000, '1775522157_icon#2.png', '2026-04-07 02:35:57', 3, 'pending'),
-(7, '21', 'transfer', 80000, '1775525552_icon#1.png', '2026-04-07 03:32:32', 3, 'pending'),
-(8, 'jauh', 'cod', 80000, '', '2026-04-07 03:45:19', 3, 'accepted'),
-(9, 'satuan', 'transfer', 80000, '1775530093_ChatGPT Image 6 Apr 2026, 09.50.58.png', '2026-04-07 04:48:13', 3, 'accepted'),
-(10, 'jalan ikhlas nomor 23 tanah baru beji depok', 'cod', 80000, '', '2026-04-07 04:55:13', 3, 'accepted'),
-(11, 'Jl. Ikhlas RT004 RW011 No.23, Tanah Baru Beji Depok', 'transfer', 80000, '1775534331_WhatsApp Image 2026-04-07 at 10.54.58 AM.jpeg', '2026-04-07 05:58:51', 5, 'accepted'),
-(12, 'asddsa', 'transfer', 80000, '1775534704_WhatsApp Image 2026-04-07 at 10.54.58 AM.jpeg', '2026-04-07 06:05:04', 5, 'accepted'),
-(13, 'sdasd', 'transfer', 80000, '1775535361_icon#2.png', '2026-04-07 06:16:01', 5, 'accepted'),
-(14, 'asdasd', 'cod', 80000, '', '2026-04-07 06:24:03', 5, 'accepted'),
-(15, 'Jl. Ikhlas RT004 RW011 No.23, Tanah Baru Beji Depok', 'transfer', 80000, '1775541962_ChatGPT Image 6 Apr 2026, 09.52.52.png', '2026-04-07 08:06:02', 5, 'accepted'),
-(16, 'sadasdasdasd', 'cod', 80000, '', '2026-04-07 08:10:17', 5, 'accepted'),
-(17, 'blabla', 'cod', 160000, '', '2026-04-07 08:39:18', 5, 'accepted'),
-(18, 'asdasd', 'cod', 80000, '', '2026-04-07 13:10:23', 5, 'pending'),
-(19, 'aaaaa', 'cod', 80000, '', '2026-04-07 13:24:41', 5, 'pending'),
-(20, 'asdad', 'cod', 240000, '', '2026-04-07 17:18:10', 5, 'pending'),
-(21, 'Jl. Ikhlas RT004 RW011 No.23, Tanah Baru Beji Depok', 'transfer', 80000, '1775617742_WhatsApp Image 2026-04-07 at 10.54.58 AM.jpeg', '2026-04-08 05:09:02', 5, 'accepted');
+INSERT INTO `orders` (`id`, `address`, `payment_method`, `total`, `proof`, `created_at`, `user_id`, `status`, `expedition_name`, `shipping_type`, `shipping_cost`) VALUES
+(25, 'Jl. Ikhlas RT005 RW011 Tanah Baru Beji Depok', 'transfer', 910000, '1775700590_ChatGPT Image 5 Apr 2026, 20.37.29.png', '2026-04-09 09:09:50', 5, 'pending', 'J&T Express', 'Ekspres', 30000),
+(26, 'Jl. Ikhlas RT005 RW011 Tanah Baru Beji Depok', 'transfer', 95000, '1775701862_WhatsApp Image 2026-04-07 at 10.54.58 AM.jpeg', '2026-04-09 09:31:02', 5, '', 'SiCepat', 'Reguler', 15000),
+(27, 'Jl. Ikhlas RT005 RW011 Tanah Baru Beji Depok', 'transfer', 95000, '1775702012_Sign up-cuate.png', '2026-04-09 09:33:32', 5, 'pending', 'JNE', 'Reguler', 15000);
 
 -- --------------------------------------------------------
 
@@ -163,7 +155,13 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `qty`, `price`) VALUE
 (18, 18, 28, 1, 80000),
 (19, 19, 28, 1, 80000),
 (20, 20, 28, 3, 80000),
-(21, 21, 28, 1, 80000);
+(21, 21, 28, 1, 80000),
+(22, 22, 28, 4, 80000),
+(23, 23, 28, 10, 80000),
+(24, 24, 28, 1, 80000),
+(25, 25, 28, 11, 80000),
+(26, 26, 28, 1, 80000),
+(27, 27, 28, 1, 80000);
 
 -- --------------------------------------------------------
 
@@ -187,7 +185,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `category`, `stock`, `price`, `picture`, `created_at`, `description`) VALUES
-(28, 'Mens Premium Quick Dry Polo Collar Shirt Short Sleeve Moisture Wicking Fabric', 'shirt', 100, 80000, '1775524970_id-11134207-7ra0g-mdelgydwpxfw7e.png', '2026-02-25', 'Rugby Polo Shirt Pria Wanita Black Gold adalah pilihan sempurna untuk gaya santai yang keren.\r\n\r\nDesain Modern: Kombinasi warna hitam dan cream yang menarik.\r\n\r\nKenyamanan: Terbuat dari bahan berkualitas untuk kenyamanan sehari-hari.\r\n\r\nKesesuaian: Cocok untuk berbagai kesempatan, baik formal maupun informal.\r\n\r\nPadu padan yang ideal untuk tampilan stylish dan nyaman di setiap kesempatan!\r\n\r\nProduk baru Kaos Polo \r\n\r\nSlamat Datang di ARC Apparel\r\n\r\nMaterial yang Kita gunakan\r\n\r\n100% Cotton Premium Anti Bakteri\r\n\r\nKriteria matrial yang tidak menerawang, sangat halus dan lembut tidak menyebabkan iritasi kepada kulit kita, material yang sejuk saat digunakan, menyerap keringat tidak membuat gerah.\r\n\r\nSablon DTF premium\r\n\r\nTekstur yang lembut tidak mudah retak, warna yang solid, gambar yang tajam,warna sablon tidak luntur. finishing sablon doff .\r\n\r\nJahitan rantai pada pundak\r\n\r\noverdeck di tepian tangan dan badan\r\n\r\ndouble stick di bagian Kerah \r\n\r\ndengan demikian membuat pakaian lebih kokoh.\r\n\r\nSize chart\r\n\r\nharap lihat dalam bentuk ukuran centimeter karena setiap postur tubuh berbeda beda walaupun umur sama.\r\n\r\nHarap ukur kembali agar tidak ada kesalahan pemilihan size\r\n\r\nTabel Size ada di Foto\r\n\r\nNB : Jika ada stock yang kosong pasti kita konfirmasi , jadi tidak usah ragu untuk order ya .');
+(28, 'Mens Premium Quick Dry Polo Collar Shirt Short Sleeve Moisture Wicking Fabric', 'shirt', 86, 80000, '1775524970_id-11134207-7ra0g-mdelgydwpxfw7e.png', '2026-02-25', 'Rugby Polo Shirt Pria Wanita Black Gold adalah pilihan sempurna untuk gaya santai yang keren.\r\n\r\nDesain Modern: Kombinasi warna hitam dan cream yang menarik.\r\n\r\nKenyamanan: Terbuat dari bahan berkualitas untuk kenyamanan sehari-hari.\r\n\r\nKesesuaian: Cocok untuk berbagai kesempatan, baik formal maupun informal.\r\n\r\nPadu padan yang ideal untuk tampilan stylish dan nyaman di setiap kesempatan!\r\n\r\nProduk baru Kaos Polo \r\n\r\nSlamat Datang di ARC Apparel\r\n\r\nMaterial yang Kita gunakan\r\n\r\n100% Cotton Premium Anti Bakteri\r\n\r\nKriteria matrial yang tidak menerawang, sangat halus dan lembut tidak menyebabkan iritasi kepada kulit kita, material yang sejuk saat digunakan, menyerap keringat tidak membuat gerah.\r\n\r\nSablon DTF premium\r\n\r\nTekstur yang lembut tidak mudah retak, warna yang solid, gambar yang tajam,warna sablon tidak luntur. finishing sablon doff .\r\n\r\nJahitan rantai pada pundak\r\n\r\noverdeck di tepian tangan dan badan\r\n\r\ndouble stick di bagian Kerah \r\n\r\ndengan demikian membuat pakaian lebih kokoh.\r\n\r\nSize chart\r\n\r\nharap lihat dalam bentuk ukuran centimeter karena setiap postur tubuh berbeda beda walaupun umur sama.\r\n\r\nHarap ukur kembali agar tidak ada kesalahan pemilihan size\r\n\r\nTabel Size ada di Foto\r\n\r\nNB : Jika ada stock yang kosong pasti kita konfirmasi , jadi tidak usah ragu untuk order ya .');
 
 -- --------------------------------------------------------
 
@@ -233,16 +231,16 @@ CREATE TABLE `users` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL
+  `avatar` varchar(255) DEFAULT NULL,
+  `address` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `avatar`) VALUES
-(3, 'yazid', 'upaanpipi@gmail.com', '$2y$10$APSXnz.MlFBWKD/anUVt9OmitYawEZA.H8M7NEgTzrvspITa1o9EG', '2026-04-07 06:46:56', 'uploads/avatars/1775615953_Nama Product.png'),
-(5, 'acit', 'iniayuma.a@gmail.com', '$2y$10$dNRQSb.YwYWyRnhr2UUNdOxNxnpbfzX2VNhIVmUG4lrfjVyx5BV9i', '2026-04-07 10:52:35', 'uploads/avatars/1775615917_ChatGPT Image 6 Apr 2026, 08.32.13.png');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `avatar`, `address`) VALUES
+(5, 'acit', 'iniayuma.a@gmail.com', '$2y$10$dNRQSb.YwYWyRnhr2UUNdOxNxnpbfzX2VNhIVmUG4lrfjVyx5BV9i', '2026-04-07 10:52:35', 'uploads/avatars/1775615917_ChatGPT Image 6 Apr 2026, 08.32.13.png', 'Jl. Ikhlas RT005 RW011 Tanah Baru Beji Depok');
 
 --
 -- Indexes for dumped tables
@@ -320,25 +318,25 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `officers`
 --
 ALTER TABLE `officers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `products`

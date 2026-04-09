@@ -1,7 +1,7 @@
 username admin : admin
 password admin : azula
 
-website saya full native dengan frameworknya tailwind
+website saya full native dengan frameworknya tailwind.
 
 fitur detail di history, tracking, linked notif sudah selesai, 
 fitur tracking sudah termasuk ke dalam detail history.
