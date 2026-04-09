@@ -93,8 +93,16 @@ flex items-center justify-between px-10 py-5">
         <div class="relative" id="notifWrapper">
             <?php
             $notifications = [];
+            $user_email = '';
             if(isset($_SESSION['user_id'])){
                 $u_id = $_SESSION['user_id'];
+
+                // Ambil email user
+                $q_user_email = mysqli_query($conn, "SELECT email FROM users WHERE id='$u_id'");
+                if($q_user_email && $row_email = mysqli_fetch_assoc($q_user_email)){
+                    $user_email = $row_email['email'];
+                }
+
                 $q_orders = mysqli_query($conn, "SELECT id, status, created_at FROM orders WHERE user_id='$u_id' ORDER BY id DESC LIMIT 5");
                 if($q_orders){
                     while($row_o = mysqli_fetch_assoc($q_orders)){
@@ -109,21 +117,49 @@ flex items-center justify-between px-10 py-5">
                         }
                         $produk_str = implode(', ', $item_names);
 
-                        if($status === 'accepted'){
+                        if($status === 'pending'){
                             $notifications[] = [
-                                'title' => 'Pesanan Diterima!',
-                                'desc' => 'Admin telah menyetujui pesanan Anda. Email pengantaran sudah diberikan.',
-                                'icon' => 'mail-check',
-                                'icon_color' => 'text-[#0B5C4A]',
-                                'icon_bg' => 'bg-[#0B5C4A]/10'
-                            ];
-                        } else if($status === 'pending'){
-                            $notifications[] = [
-                                'title' => 'Berhasil Checkout',
-                                'desc' => 'Anda berhasil checkout produk: ' . $produk_str . '.',
-                                'icon' => 'shopping-bag',
+                                'title'      => 'Berhasil Checkout',
+                                'desc'       => 'Anda berhasil checkout produk: ' . $produk_str . '.',
+                                'icon'       => 'shopping-bag',
                                 'icon_color' => 'text-blue-600',
-                                'icon_bg' => 'bg-blue-50'
+                                'icon_bg'    => 'bg-blue-50',
+                                'link'       => 'transaction_history.php',
+                                'link_label' => 'Lihat Riwayat Transaksi →',
+                                'link_target'=> '_self'
+                            ];
+                        } elseif($status === 'processing'){
+                            $notifications[] = [
+                                'title'      => 'Pesanan Diproses',
+                                'desc'       => 'Pesanan Anda sedang dipersiapkan oleh tim kami.',
+                                'icon'       => 'package',
+                                'icon_color' => 'text-blue-600',
+                                'icon_bg'    => 'bg-blue-50',
+                                'link'       => 'transaction_history.php',
+                                'link_label' => 'Lihat Detail →',
+                                'link_target'=> '_self'
+                            ];
+                        } elseif($status === 'shipped'){
+                            $notifications[] = [
+                                'title'      => 'Pesanan Dikirim! 🚚',
+                                'desc'       => 'Pesanan Anda dalam perjalanan: ' . $produk_str . '.',
+                                'icon'       => 'truck',
+                                'icon_color' => 'text-purple-600',
+                                'icon_bg'    => 'bg-purple-50',
+                                'link'       => 'https://mail.google.com/mail/u/' . urlencode($user_email),
+                                'link_label' => 'Buka Email Anda →',
+                                'link_target'=> '_blank'
+                            ];
+                        } elseif($status === 'delivered'){
+                            $notifications[] = [
+                                'title'      => 'Pesanan Selesai! ✅',
+                                'desc'       => 'Pesanan ' . $produk_str . ' telah sampai. Terima kasih sudah belanja di Azula!',
+                                'icon'       => 'badge-check',
+                                'icon_color' => 'text-[#0B5C4A]',
+                                'icon_bg'    => 'bg-[#0B5C4A]/10',
+                                'link'       => 'transaction_history.php',
+                                'link_label' => 'Lihat Riwayat →',
+                                'link_target'=> '_self'
                             ];
                         }
                     }
@@ -159,18 +195,18 @@ flex items-center justify-between px-10 py-5">
                         <div class="px-5 py-6 text-center text-gray-500 text-sm">Belum ada notifikasi</div>
                     <?php else: ?>
                         <?php foreach($notifications as $n): ?>
-                        <div class="px-5 py-4 flex gap-4 hover:bg-gray-50 transition border-b border-gray-50 cursor-pointer" onclick="markRead()">
-                            <div class="flex-shrink-0 w-10 h-10 <?= $n['icon_bg']; ?> rounded-full flex items-center justify-center">
+                        <a href="<?= htmlspecialchars($n['link']); ?>" target="<?= $n['link_target']; ?>" onclick="markRead()" class="px-5 py-4 flex gap-4 hover:bg-[#0B5C4A]/5 transition border-b border-gray-50 cursor-pointer group no-underline">
+                            <div class="flex-shrink-0 w-10 h-10 <?= $n['icon_bg']; ?> rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                                 <i data-lucide="<?= $n['icon']; ?>" class="w-5 h-5 <?= $n['icon_color']; ?>"></i>
                             </div>
                             <div class="flex-1">
                                 <p class="text-sm font-semibold text-gray-800"><?= htmlspecialchars($n['title']); ?></p>
                                 <p class="text-xs text-gray-500 mt-1 leading-relaxed"><?= htmlspecialchars($n['desc']); ?></p>
-                                <?php if($n['title'] === 'Pesanan Diterima!'): ?>
-                                    <p class="text-[11px] text-[#199276] font-medium mt-1">Cek email Anda secara berkala</p>
-                                <?php endif; ?>
+                                <p class="text-[11px] text-[#0B5C4A] font-semibold mt-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <?= htmlspecialchars($n['link_label']); ?>
+                                </p>
                             </div>
-                        </div>
+                        </a>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
@@ -284,8 +320,10 @@ flex items-center justify-between px-10 py-5">
     });
 
     function markRead(){
-        document.getElementById('notifDot').style.display = 'none';
-        document.querySelector('#notifMenu .text-xs.bg-red-100').style.display = 'none';
+        const dot = document.getElementById('notifDot');
+        if(dot) dot.style.display = 'none';
+        const badge = document.querySelector('#notifMenu .text-xs.bg-red-100');
+        if(badge) badge.style.display = 'none';
     }
 </script>
 

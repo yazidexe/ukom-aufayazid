@@ -60,7 +60,7 @@ if(empty($products)){
 $productList = implode('<br>', $products);
 
 // 🔥 UPDATE STATUS
-mysqli_query($conn, "UPDATE orders SET status='accepted' WHERE id='$id'");
+mysqli_query($conn, "UPDATE orders SET status='processing' WHERE id='$id'");
 
 // 🔥 KIRIM EMAIL
 $mail = new PHPMailer(true);

@@ -269,40 +269,48 @@ $transactionData = mysqli_query($conn, "
                                 <?php endif; ?>
                             </td>
 
-                            <td class="p-3">
-                                <?php if($row['status'] == 'accepted'): ?>
-                                    <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-xs">
-                                        Accepted
-                                    </span>
-                                <?php else: ?>
-                                    <span class="bg-yellow-100 text-yellow-600 px-2 py-1 rounded text-xs">
-                                        Pending
-                                    </span>
-                                <?php endif; ?>
+                            <td class="p-3 text-center">
+                                <?php
+                                $s = $row['status'];
+                                $badges = [
+                                    'pending'    => ['bg-amber-100 text-amber-700',  '⏳ Menunggu'],
+                                    'processing' => ['bg-blue-100 text-blue-700',    '🔄 Diproses'],
+                                    'shipped'    => ['bg-purple-100 text-purple-700','🚚 Dikirim'],
+                                    'delivered'  => ['bg-emerald-100 text-emerald-700','✓ Selesai'],
+                                ];
+                                [$cls, $lbl] = $badges[$s] ?? ['bg-gray-100 text-gray-600', $s];
+                                ?>
+                                <span class="<?= $cls ?> px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap"><?= $lbl ?></span>
                             </td>
 
-                            <td class="p-3 flex flex-col gap-2 items-center">
-
-                                <!-- STRUK -->
-                                <a href="receipt.php?id=<?= $row['id']; ?>">
-                                    <button class="bg-[#199276] text-white px-4 py-1 rounded text-xs">
-                                        Receipt
-                                    </button>
-                                </a>
-
-                                <!-- ACCEPT -->
-                                <?php if($row['status'] == 'pending'): ?>
-                                    <a href="accept_order.php?id=<?= $row['id']; ?>">
-                                        <button class="bg-blue-500 text-white px-3 py-1 rounded text-xs">
-                                            Accept
-                                        </button>
+                            <td class="p-3">
+                                <div class="flex flex-col gap-1.5 items-center">
+                                    <!-- STRUK -->
+                                    <a href="receipt.php?id=<?= $row['order_id']; ?>" class="w-full">
+                                        <button class="w-full bg-[#199276] text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-[#0f7060] transition">Receipt</button>
                                     </a>
-                                <?php else: ?>
-                                    <button class="bg-gray-300 text-gray-500 px-3 py-1 rounded text-xs cursor-not-allowed">
-                                        Accepted
-                                    </button>
-                                <?php endif; ?>
 
+                                    <!-- TRACKING AKSI PROGRESIF -->
+                                    <?php if($row['status'] === 'pending'): ?>
+                                        <a href="accept_order.php?id=<?= $row['order_id']; ?>" class="w-full">
+                                            <button class="w-full bg-blue-500 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-blue-600 transition">▶ Proses</button>
+                                        </a>
+                                    <?php elseif($row['status'] === 'processing'): ?>
+                                        <form method="POST" action="update_tracking.php" class="w-full">
+                                            <input type="hidden" name="order_id" value="<?= $row['order_id']; ?>">
+                                            <input type="hidden" name="new_status" value="shipped">
+                                            <button type="submit" class="w-full bg-purple-500 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-purple-600 transition">🚚 Kirim</button>
+                                        </form>
+                                    <?php elseif($row['status'] === 'shipped'): ?>
+                                        <form method="POST" action="update_tracking.php" class="w-full">
+                                            <input type="hidden" name="order_id" value="<?= $row['order_id']; ?>">
+                                            <input type="hidden" name="new_status" value="delivered">
+                                            <button type="submit" class="w-full bg-emerald-500 text-white px-3 py-1 rounded-lg text-xs font-medium hover:bg-emerald-600 transition">✓ Selesai</button>
+                                        </form>
+                                    <?php else: ?>
+                                        <button class="w-full bg-gray-100 text-gray-400 px-3 py-1 rounded-lg text-xs cursor-not-allowed" disabled>✅ Selesai</button>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; ?>
